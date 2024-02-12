@@ -1,0 +1,8 @@
+# Ignoriere den "Beispiel"-Ordner
+__pycache__/
+DZNE_data/
+grafics/
+JIMM_INVIVO/
+older_scripts/
+
+# Ignoriere eine bestimmte Datei
