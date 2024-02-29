@@ -8,7 +8,7 @@ Tools zum Sicherstellen von Performance mit Python
 
 """
 
-import psutil
+import psutil, sys
 
 ###############################################################################
 # Speicherplatz für virtuellen Arbeitsspeicher (CPU) abrufen
@@ -29,6 +29,8 @@ used_memory_gb = used_memory_bytes / (1024 * 1024 * 1024)
 print("Gesamter virtueller Speicherplatz: {:.2f} MB".format(total_memory_mb))
 print("Aktuell belegter Speicherplatz: {:.2f} MB".format(used_memory_mb))
 print("Aktuell belegter Speicherplatz: {:.2f} GB".format(used_memory_gb))
+
+sys.exit()
 
 ###############################################################################
 # Abeitsspeichernutzung durch laufende Prozesse

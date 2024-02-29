@@ -18,7 +18,7 @@ Created on Mon Oct 23 11:32:14 2023
 
 ###############################################################################
 # 1. Import Modules
-import os, time, sys
+import os, time
 import matplotlib.pyplot       as     plt
 import numpy                   as     np
 import helpTools               as     hlp
@@ -26,17 +26,14 @@ from   mpl_toolkits.axes_grid1 import make_axes_locatable
 from   kernels                 import T1_decay_abs, T2_decay, system_matrix_from_kernel
 from   helpToolsT2             import EpyG_Paramset, EpyG_mSE_decay, EpyG_mSE_system_matrix
 
-from   parameters              import Parameters as PM
-
 ###############################################################################
 # 2. Definition of model parameters
 # 2.1. Integration/Inversion within the model space
+
 startTime        = time.time()
-param            = PM(noPart=None, noIter=None)
 
-sys.exit()
-
-datSpace         = 24                 # step size for the plot of the syn/obs Data
+datSpace         = 24                 # step size for the plot of the syn/obs Data  
+modSpace         = 1000               # step size for integration
 SNR              = 200                # relatively added noice 1/SNR
 
 T1interv         = (0.01, 2000)       # integration borders
@@ -79,6 +76,7 @@ for testseed in [0, 600, 80, 122345, 98765, 5673, 11, 12, 13][:1]:
         m1_sig_T1      = (5, 50)         # standard deviation of m1
         m2_T1          = (700, 1300)     # center of the gaussian, 2nd peak 
         m2_sig_T1      = (30, 150)       # standard deviation of m2
+        int_T1
         
         m1_T2          = (5, 30)
         m1_sig_T2      = (1, 20)

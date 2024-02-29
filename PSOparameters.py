@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Aug  1 13:34:00 2023
+Initial parameters for applying particle swarm optimizing (PSO) on invivo MRI data.
 
-@author: kobe
+@author: Martin Kobe, martin.kobe@ufz.de, martin.kobe@email.de
+
+@status: 03.2024; part of the JIMM Project (DZNE Bonn & UFZ Leipzig)
 """
 
 import numpy as np
@@ -129,12 +131,12 @@ class Parameters():
                 self.noPara = 9           # model vector size
                 self.m1     = (5,   35)   # center of the gaussian, 1st peak 
                 self.m1_sig = (0.1, 0.1)  # standard deviation of m1
-                self.m2     = (60,  90)   # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1, 5)    # standard deviation of m2
+                self.m2     = (50,  90)   # center of the gaussian, 2nd peak 
+                self.m2_sig = (0.1, 0.1)  # standard deviation of m2
                 self.m3     = (80,  130)  # center of the gaussian, 3rd peak
-                self.m3_sig = (5,   40)   # standard deviation of m2
+                self.m3_sig = (0.1, 0.1)  # standard deviation of m2
                 self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-                self.int3   = (0.1, 10)   # area under the curve of m3 gaussian
+                self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
                 self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT
     
     class T2S():
@@ -159,12 +161,12 @@ class Parameters():
             
             def __init__(self):
                 self.noPara = 9           # model vector size
-                self.m1     = (5,   35)   # center of the gaussian, 1st peak 
+                self.m1     = (5,   25)   # center of the gaussian, 1st peak 
                 self.m1_sig = (0.1, 0.1)  # standard deviation of m1
-                self.m2     = (40,  80)   # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1, 5)    # standard deviation of m2
-                self.m3     = (60,  120)  # center of the gaussian, 3rd peak
-                self.m3_sig = (5,   40)   # standard deviation of m2
+                self.m2     = (30,  80)   # center of the gaussian, 2nd peak 
+                self.m2_sig = (0.1, 10)  # standard deviation of m2
+                self.m3     = (70,  130)   # center of the gaussian, 3rd peak
+                self.m3_sig = (0.1, 40)  # standard deviation of m2
                 self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-                self.int3   = (0.1, 10)   # area under the curve of m3 gaussian
+                self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
                 self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT        
