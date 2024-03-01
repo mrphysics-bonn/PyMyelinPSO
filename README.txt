@@ -5,6 +5,6 @@
 
 (a) Required installs conda: matplotlib, natsort, nibabel
     Required installs pip:   scipy, pymp
-    Required packages git:   mwf_t1t2t2s
+    Required packages git:   mwf_t1t2t2s, pyepg (maximum cp39)
 
 (b) Parallelization is done by windows/linux compatible concurrent.futures package
