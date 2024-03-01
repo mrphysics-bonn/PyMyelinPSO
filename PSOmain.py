@@ -35,8 +35,8 @@ noPSOIterPix = 1000    # number of cycles of single PSO executions on a pixel
 # mese:  multi echo spin echo     --> T2  signal
 # megre: multi echo gradient echo --> T2* signal
 # dream_corr_resampled: multi echo phase information 
-NII_dataPath  = 'S:/JIMM/real_data/DZNE_data'
-NII_savePath  = 'S:/JIMM/real_data/grafics'
+NII_dataPath  = 'S:/JIMM/invivoData/DZNE_data'
+NII_savePath  = 'S:/JIMM/invivoData/grafics'
 NII_keyString = None
 noSlice       = 18
 
@@ -133,7 +133,7 @@ PSO.init_MWF_Analysis(rootMWF, noSlice)
 PSOgrafics = PSOgrafics()
 
 # Mask invivo data slice to reduce pixels for analysis and save execution time
-resultsMask = np.load('S:/JIMM/real_data/grafics/mask2.npy', allow_pickle=True).item()
+resultsMask = np.load('S:/JIMM/invivoData/grafics/mask2.npy', allow_pickle=True).item()
 resultsMask['T2S'][-2,:,:,0][resultsMask['T2S'][-2,:,:,0]>0.125] = np.nan
 
 rootMWF.data.msk[np.isnan(resultsMask['T2S'][-2,:,:,0])] = 0 # 3581 pixels left
@@ -430,7 +430,7 @@ if __name__ == "__main__":
             
             np.random.seed(0)
             
-            for kk, (yy,xx) in enumerate(coordList[:1]):
+            for kk, (yy,xx) in enumerate(coordList[-1:]):
     
                 print(f'\nExecute PSO for y{yy}x{xx} - signal: {signal} | peaks: {noPeaks}')      
                 
