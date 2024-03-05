@@ -4,7 +4,7 @@
 *** Particle Swarm Optimzation (PSO) on MRI-invivo data ***
 
 (a) Required installs conda: matplotlib, natsort, nibabel
-    Required installs pip:   scipy, pymp
-    Required packages git:   mwf_t1t2t2s, pyepg (maximum cp39)
+    Required installs pip:   scipy, pymp, cython
+    Required packages git:   mwf_t1t2t2s, pyepg (https://github.com/JIMM-MRI/EpyG)
 
 (b) Parallelization is done by windows/linux compatible concurrent.futures package
