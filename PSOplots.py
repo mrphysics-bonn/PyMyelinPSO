@@ -19,12 +19,12 @@ class PSOgrafics():
     def __init__(self):
         pass   
         
-    def plotPixel(self,
-                  MWFclass: object,
-                  PSOclass: object,
-                  position: tuple,
-                  savepath: str,
-                  string:   str):
+    def plotIterTest(self,
+                     MWFclass: object,
+                     PSOclass: object,
+                     position: tuple,
+                     savepath: str,
+                     string:   str):
 
         sig           = PSOclass.signType[0]
         yy,xx,noSlice = position[0], position[1], position[2]
@@ -81,7 +81,7 @@ class PSOgrafics():
         os.makedirs(savepath, exist_ok=True)
         plt.savefig(f'{savepath}pix_y-{yy}_x-{xx}.jpg', dpi=300, format='jpg')                
     
-        plt.show(); plt.close()
+        plt.close()
 
 ###############################################################################
 
@@ -189,8 +189,7 @@ class PSOgrafics():
                 ax.flat[ii].set_facecolor('b')
                 fig.set_facecolor('w')
         
-            if ind == PSOclass.noPSOIter or ind == -1: 
-                ind = 'bfit'
+            if ind == -1: ind = 'bfit'
 
             dist = '3 peaks (DIRAC)' if PSOclass.noPeaks == 'DIRAC' else '2 peaks (GAUSS)'
         
@@ -295,9 +294,9 @@ class PSOgrafics():
         if saveFig[1]==True:
             savepath = f'{saveFig[0]}{string}/'
             os.makedirs(savepath, exist_ok=True) 
-            plt.savefig(f'{savepath}pix_y-{yy}_x-{xx}.png', dpi=300, format='png')  
+            plt.savefig(f'{savepath}pix_y-{yy}_x-{xx}.png', dpi=300, format='png')
             
-        plt.show; plt.close()
+        plt.close()
 
 
 ###############################################################################
@@ -353,10 +352,10 @@ class PSOgrafics():
             fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12,6), tight_layout=True)       
             fig.gca().xaxis.set_major_formatter('{:.3f}'.format)
         
-            _lim = (0,0.35) if sig == 'T2' else (0,0.25)
+            _lim = (0,0.35) if PSOclass.noPeaks=='GAUSS' else (0,0.25)
             
             im0 = ax[0].imshow(PSOresultSLI[sig][-2,:,:,-1],cmap=cmap,vmin=_lim[0],vmax=_lim[1])
-            ax[0].set_title('MWF map with best misfit'); ax[0].scatter(xx, yy, color='red')
+            ax[0].set_title('MWF map with best misfit'); ax[0].scatter(position[1], position[0], color='red')
             ax.flat[0].axis('off'); ax.flat[0].set_facecolor('b') 
             fig.set_facecolor('w'); #fig.colorbar(im0, ax=ax[0],orientation='horizontal')
             
@@ -376,11 +375,12 @@ class PSOgrafics():
             ax[1].set_ylabel('global best MWF []'); ax[1].set_xlabel('global best Fit []')
             
             if saveFig[1]==True:
+                yy, xx   = str(yy).zfill(2), str(xx).zfill(2)
                 savepath = f'{saveFig[0]}{string}/'
-                os.makedirs(savepath, exist_ok=True) 
-                fig.savefig(f'{savepath}y{yy}x{xx}.png', dpi=300, format='png')
+                os.makedirs(savepath, exist_ok=True)
+                fig.savefig(f'{savepath}y{yy}x{xx}_{sig}.png', dpi=300, format='png')
                 
-            plt.show; plt.close()
+            plt.close()
 
             # cut outliers and percentile
             if cutPercentile == True:
@@ -404,7 +404,7 @@ class PSOgrafics():
             fig.gca().xaxis.set_major_formatter('{:.3f}'.format)
 
             im0 = ax[0].imshow(PSOresultSLI[sig][-2,:,:,-1],cmap=cmap,vmin=_lim[0],vmax=_lim[1])
-            ax[0].set_title('MWF map with best misfit'); ax[0].scatter(xx, yy, color='red')
+            ax[0].set_title('MWF map with best misfit'); ax[0].scatter(position[1], position[0], color='red')
             ax.flat[0].axis('off'); ax.flat[0].set_facecolor('b')
             fig.set_facecolor('w'); #fig.colorbar(im0, ax=ax[0], orientation='horizontal')
             
@@ -424,11 +424,12 @@ class PSOgrafics():
             ax[1].set_ylabel('global best MWF []'); ax[1].set_xlabel('global best Fit []')
             
             if saveFig[1]==True:
+                yy, xx   = str(yy).zfill(2), str(xx).zfill(2)
                 savepath = f'{saveFig[0]}{string}/'
                 os.makedirs(savepath, exist_ok=True)
-                fig.savefig(f'{savepath}y{yy}x{xx}_cut.png', dpi=300, format='png')
+                fig.savefig(f'{savepath}y{yy}x{xx}_{sig}_cut.png', dpi=300, format='png')
                 
-            plt.show; plt.close()
+            plt.close()
             
 
 ###############################################################################
@@ -442,7 +443,7 @@ class PSOgrafics():
 
         string : string
 
-        dim : output diension
+        dim : output dimension
               ms  - milli seconds
               mus - micro seconds
               MS  - min:sec (default)
@@ -450,9 +451,6 @@ class PSOgrafics():
 
         Returns : None
         '''
-        
-        if boolean == True:
-            print(boolean)
             
         T_now       = time.time()
         T_elapsed   = T_now - startTime

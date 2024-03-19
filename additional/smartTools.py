@@ -76,3 +76,52 @@ pso = PSO()
 # Gib die Anzahl der erstellten Instanzen aus
 print("Anzahl der Instanzen von PSO:", PSO.instance_count)
 
+###############################################################################
+# draw 
+###############################################################################
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def gaussian(x, mu, sigma):
+    return np.exp(-((x - mu) ** 2) / (2 * sigma ** 2))
+
+fig, ax =  plt.subplots(nrows=2, ncols=1, tight_layout=True)
+# Erzeugen der x-Werte
+x_values = np.linspace(0, 10, 200)
+
+# Festlegen der Parameter für die Gaußverteilungen
+mu1, sigma1 = 2, 0.25  # Erster Durchmesser von 1
+mu2, sigma2 = 5, 1.4    # Zweiter Durchmesser von 5
+
+# Erstellen der beiden Gaussglocken
+glocke1 = gaussian(x_values, mu1, sigma1)
+glocke1 = glocke1[:120]
+glocke2 = gaussian(x_values, mu2, sigma2)
+
+combined_curve = np.concatenate((glocke1, glocke2/1.5))
+ax[0].fill_between(range(len(combined_curve)), combined_curve, color='lightgrey', alpha=0.5, hatch='///')
+ax[0].plot(combined_curve, label='GAUSS - 2 peaks')
+
+# Festlegen der Parameter für die Gaußverteilungen
+mu1, sigma1 = 2, 0.1  # Erster Durchmesser von 1
+mu2, sigma2 = 5, 0.3    # Zweiter Durchmesser von 5
+
+# Erstellen der beiden Gaussglocken
+glocke1 = gaussian(x_values, mu1, sigma1)
+glocke1 = glocke1[:130]
+glocke2 = gaussian(x_values, mu2, sigma2)
+glocke2 = glocke2[70:150]
+
+combined_curve = np.concatenate((glocke1, glocke2/1.5, glocke2/1.5))
+ax[1].fill_between(range(len(combined_curve)), combined_curve, color='lightgrey', alpha=0.5, hatch='///')
+ax[1].plot(combined_curve, label='DIRAC - 3 peaks')
+
+for i in range(2):
+    ax[i].set_xticks([])
+    ax[i].set_yticks([])
+    ax[i].set_yticklabels([])
+    ax[i].set_xticklabels([])
+    ax[i].legend(loc='upper right')
+    
+

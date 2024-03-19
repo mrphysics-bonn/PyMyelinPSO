@@ -12,7 +12,7 @@ helper functions for T1, T2star and T2 MWF mapping of in vivo data
 # Extended Phase Graphs in Python (by Daniel Brenner, Bonn, 2016)
 # --> https://github.com/JIMM-MRI/EpyG
 
-import glob, os, natsort
+import glob, os, natsort, sys
 import numpy                       as     np
 from   scipy                       import integrate as inting
 from   scipy.ndimage.interpolation import shift
@@ -34,28 +34,36 @@ def get_synData(filelist: list, noSlice: int, indShift=0, meta=False):
     
     return data, data_px, index_i, index_j + indShift
 
-def get_measData(file: list):
+def get_measData(filename: list):
     
     """ Stores measured decay data into a numpy array """
+    
+    if filename == 'NO_FILE':
+        return
 
-    return file.get_fdata()
+    return filename.get_fdata()
 
 
-def load_data(path: str, ext: str, NIFTI_KEY=None):
+def load_data(path: str, filename: str, NIFTI_KEY=None):
 
     """ Loads MRI data into a filelist
     
     Args:
         path: working directory
-        ext:  file extension
+        filename:  file name
         NIFTI_KEY: keywords to search multiple images in WD
     
     RETURNS
         nimg: list of GRE nifti images (grey)
     """
     
-    filelist  = glob.glob(path+f'\\*{ext}', recursive=True)
+    if filename == 'NO_FILE':
+        return ['NO_FILE']
+
+    # filelist  = glob.glob(path+f'\\*{ext}', recursive=True)
     
+    filelist  = [os.path.join(path, file) for file in os.listdir(path) if os.path.basename(file) == filename]
+
     if NIFTI_KEY:
         nifti = [s for s in filelist if NIFTI_KEY in s]
         nifti = natsort.natsorted(nifti)

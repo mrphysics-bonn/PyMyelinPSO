@@ -51,7 +51,7 @@ class ParticleSwarmOptimizer(PM):
         self.lpNorm        = kwargs.get('lpNorm',   'L2')
         self.invOpt        = kwargs.get('invOpt',   'V0')
         self.noPeaks       = kwargs.get('noPeaks',  'GAUSS')
-        self.modParam      = kwargs.get('modParam', ('class', None))
+        self.modParam      = kwargs.get('modParam', ('class', None, None))
         
         if self.randSeedBool == True:
             np.random.seed(self.randSeedValue)
@@ -61,18 +61,18 @@ class ParticleSwarmOptimizer(PM):
         self.invT2     = signal_input[1][1]
         self.invT2S    = signal_input[1][2]
         self.dataType  = signal_input[1][3]
-        self.addNoise  = signal_input[1][4]
+        self.addNoise  = signal_input[1][4][0]
+        self.SNR       = signal_input[1][4][1]   
         self.singleInv = signal_input[1][5]                   # RELEVANT FOR JI
         self.jointInv  = signal_input[1][6]                   # RELEVANT FOR JI
         self.signType  = signal_input[1][7]
         self.signal_cc = sum(signal_input[1][:3])             # RELEVANT FOR JI
-
+        
         self.noParam   = self.T2.GAUSS.noPara
         self.noIter    = self.PSO.noIter
         self.noPart    = self.PSO.noPart    
         self.noPSOIter = noPSOIter
-        self.SNR       = self.Inversion.SNR
-        
+
         if self.jointInv==True:
             self.sigJoint   = f'{self.signType[0]}{self.signType[1]}'
         else:
@@ -131,8 +131,7 @@ class ParticleSwarmOptimizer(PM):
         self.globMod    = {'T1':[],'T2':[],'T2S':[],self.sigJoint:[]}
         self.globSynDat = {'T1':[],'T2':[],'T2S':[],self.sigJoint:[]}
         self.globIndex  = {'T1':[],'T2':[],'T2S':[],self.sigJoint:[]}
-
-
+        
 ###############################################################################
 ###############################################################################
 ###############################################################################  
@@ -182,12 +181,12 @@ class ParticleSwarmOptimizer(PM):
      
     def __buildModelVector_V0_JSON__(self, signal):
         
-        m1     = self.modParam[1][f'SynData{signal}']['m1']
-        m1_sig = self.modParam[1][f'SynData{signal}']['m1_sig']
-        m2     = self.modParam[1][f'SynData{signal}']['m2']
-        m2_sig = self.modParam[1][f'SynData{signal}']['m2_sig']
-        int2   = self.modParam[1][f'SynData{signal}']['integ2']
-        MWF    = self.modParam[1][f'SynData{signal}']['MWF']
+        m1     = self.modParam[2][f'SynData{signal}']['m1']
+        m1_sig = self.modParam[2][f'SynData{signal}']['m1_sig']
+        m2     = self.modParam[2][f'SynData{signal}']['m2']
+        m2_sig = self.modParam[2][f'SynData{signal}']['m2_sig']
+        int2   = self.modParam[2][f'SynData{signal}']['integ2']
+        MWF    = self.modParam[2][f'SynData{signal}']['MWF']
 
         self.m1[signal]     = np.random.uniform(m1[0], m1[1], self.noPart)
         self.m1_sig[signal] = np.random.uniform(m1_sig[0], m1_sig[1], self.noPart)
@@ -206,9 +205,9 @@ class ParticleSwarmOptimizer(PM):
                                                self.int2[signal], self.MWF[signal]))
         
         if self.noPeaks == 'DIRAC':
-            m3     = self.modParam[1][f'SynData{signal}']['m3']
-            m3_sig = self.modParam[1][f'SynData{signal}']['m3_sig']
-            int3   = self.modParam[1][f'SynData{signal}']['integ3']
+            m3     = self.modParam[2][f'SynData{signal}']['m3']
+            m3_sig = self.modParam[2][f'SynData{signal}']['m3_sig']
+            int3   = self.modParam[2][f'SynData{signal}']['integ3']
 
             self.noParam        = self.T2.DIRAC.noPara
             self.m3[signal]     = np.random.uniform(m3[0], m3[1], self.noPart)
@@ -800,7 +799,7 @@ class ParticleSwarmOptimizer(PM):
           
             datspace    = self.Inversion.datSpaceT2 if self.signType[0]=='T2' else self.Inversion.datSpaceT2S                
             jsonData    = {"PSO specifications":{
-                                "_Signal type": self.signType[0],
+                                "_Signal type": self.signType,
                                 "_Iterations":  self.noIter,
                                 "_Particles":   self.noPart,                            
                                 "_PSO cycles":  self.noPSOIter,
@@ -1074,7 +1073,7 @@ class ParticleSwarmOptimizer(PM):
 
         string : string
 
-        dim : output diension
+        dim : output dimension
               ms  - milli seconds
               mus - micro seconds
               MS  - min:sec (default)
@@ -1082,10 +1081,7 @@ class ParticleSwarmOptimizer(PM):
 
         Returns : None
         '''
-        
-        if boolean == True:
-            print(boolean)
-            
+
         T_now       = time.time()
         T_elapsed   = T_now - startTime
         

@@ -36,8 +36,8 @@ class Parameters():
             self.T1_alpha       = 4.0    # ???
             self.T1_TD          = 1000.0 # ???
             self.T1_IE          = 0.95   # ???
-            self.T1min          = 1      # integration lower boarder
-            self.T1max          = 2000   # integration upper boarder
+            self.T1min          = 1      # integration lower border
+            self.T1max          = 2000   # integration upper border
             self.T1_timepoints  = np.linspace(1, 5000, self.datSpaceT1)
             
             # T2** parameters for generation of observed data from MWF
@@ -137,7 +137,7 @@ class Parameters():
                 self.m3_sig = (0.1, 0.1)  # standard deviation of m2
                 self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
                 self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT
+                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI
     
     class T2S():
         
@@ -155,7 +155,7 @@ class Parameters():
                 self.m2     = (51,  130)  # center of the gaussian, 2nd peak 
                 self.m2_sig = (0.1, 5)    # standard deviation of m2
                 self.int2   = (0,   5)    # area under the curve of m2 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT   
+                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI   
 
         class DIRAC():
             
@@ -169,4 +169,4 @@ class Parameters():
                 self.m3_sig = (0.1, 40)  # standard deviation of m2
                 self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
                 self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT        
+                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI        
