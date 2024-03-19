@@ -67,36 +67,18 @@ noIterTest    = False    # find reasonable iteration numbers (only for single in
 percentThresh = 0.5      # associated threshold in percent
 # (b) parallelized PSO
 calcPSO_slice = False    # parallelized PSO over all pixels in a slice
-calcPSO_pixel = True     # parallelized PSO over one pixel with noPSOIterPix iterations
-pixelList     = [(45,50), (45,55), (37,60), (40,30), (45,30)] # associated list of pixels
+calcPSO_pixel = False    # parallelized PSO over one pixel with noPSOIterPix iterations
+pixelList     = [(45,50), (45,55), (37,60), (40,30)] # associated list of pixels
 resultsList   = [f'{NII_savePath}/100I400P30PSO/T2/DIRAC/T2_results.npy',
-                 f'{NII_savePath}/100I400P30PSO/T2S/DIRAC/T2S_results.npy']
-                 # f'{NII_savePath}/100I400P25PSO/T2T2S/GAUSS/T2T2S_results.npy',
-                 # f'{NII_savePath}/100I400P25PSO/T2T2S/DIRAC/T2T2S_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_1/T2T2S/DIRAC/T2T2S_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_2/T2/DIRAC/T2_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_2/T2S/DIRAC/T2S_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_2/T2T2S/DIRAC/T2T2S_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_3/T2T2S/DIRAC/T2T2S_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_4/T2/DIRAC/T2_results.npy',
-                 # f'{NII_savePath}/100I400P30PSO_4/T2S/DIRAC/T2S_results.npy']      # list with a result file (slice)
+                 f'{NII_savePath}/100I400P30PSO/T2S/DIRAC/T2S_results.npy']  # list with a result file (slice)
 # # (c) post hoc visualization
-plotResults   = False        # generally plot results from a .npy-file
-plotSlice     = True        # visualize MWF map of a slice from PSO results
-plotPixelAcc  = True        # visualize accuracy of a pixel from PSO results
+plotResults   = False      # generally plot results from a .npy-file
+plotSlice     = True       # visualize MWF map of a slice from PSO results
+plotPixelAcc  = True       # visualize accuracy of a pixel from PSO results
 valOutliers, cutOutliers = (None, 0.1), True # cut outliers in acc.plot, tuple: (lower,upper)
 valPercentile, cutPercentile = (0, 50), True # cut percentile in acc.plot, tuple: (lower,upper)
-resultsDir    = [f'{NII_savePath}/100I400P30PSO/T2S/DIRAC/',
-                 f'{NII_savePath}/100I400P30PSO/T2S/DIRAC/']
-                 # f'{NII_savePath}/100I400P25PSO/T2T2S/GAUSS/',
-                 # f'{NII_savePath}/100I400P25PSO/T2T2S/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_1/T2T2S/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_2/T2/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_2/T2S/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_2/T2T2S/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_3/T2T2S/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_4/T2/DIRAC/',
-                 # f'{NII_savePath}/100I400P30PSO_4/T2S/DIRAC/'] # list with a result dir
+resultsDir    = [f'{NII_savePath}/100I400P30PSO/T2/DIRAC/',
+                 f'{NII_savePath}/100I400P30PSO/T2S/DIRAC/'] # list with a result dir
 
 
 ###############################################################################
@@ -532,13 +514,20 @@ if __name__ == "__main__":
             PSO.noPeaks   = 'DIRAC' if 'DIRAC' in file else 'GAUSS'
             signal        = ('').join([sig for sig in PSO.signType])
             
+            if noSlice==18 and useMask==True:
+                for sig in PSO.signType:
+                    mask          = np.copy(rootMWF.data.msk)
+                    mask[mask==0] = np.nan
+                    data[sig]     = PSO.__cutarray2mask__(data[sig], mask, cut2mask=True)
+            
             with open(os.path.join(path, f'{signal}_param.json'), 'r') as json_file: 
                 jsonParam     = json.load(json_file) 
             
             for kk in range(data[PSO.signType[0]].shape[-1]):
 
-                PSOgrafics.plotSlice(PSOclass=PSO,PSOresult=data,index=kk,
-                                     saveFig=(f'{path}/',True),limit=(jsonParam,True))
+                if kk<data[PSO.signType[0]].shape[-1]-1:
+                    PSOgrafics.plotSlice(PSOclass=PSO,PSOresult=data,index=kk,
+                                         saveFig=(f'{path}/',True),limit=(jsonParam,True))
             
                 if kk==data[PSO.signType[0]].shape[-1]-1:
                     PSOgrafics.plotSlice(PSOclass=PSO,PSOresult=data,index=-1,
@@ -556,7 +545,7 @@ if __name__ == "__main__":
             
             file = [os.path.join(path, file) for file in os.listdir(path) if file.endswith('npy')][0]
             data_slice = np.load(file, allow_pickle=True).item()
-            
+                    
             fileList = []
             
             for dirs, _, files in os.walk(path):
@@ -580,6 +569,12 @@ if __name__ == "__main__":
                 PSO.signType  = ['T2'] if 'T2/' in file else (['T2', 'T2S'] if 'T2T2S/' in file else ['T2S'])
                 PSO.noPeaks   = 'DIRAC' if 'DIRAC' in file else 'GAUSS'
                 signal        = ('').join([sig for sig in PSO.signType])
+                
+                if noSlice==18 and useMask==True:
+                    for sig in PSO.signType:
+                        mask            = np.copy(rootMWF.data.msk)
+                        mask[mask==0]   = np.nan
+                        data_slice[sig] = PSO.__cutarray2mask__(data_slice[sig], mask, cut2mask=True)
                 
                 with open(os.path.join(path, f'{signal}_param.json'), 'r') as json_file: 
                     jsonParam     = json.load(json_file)

@@ -993,7 +993,7 @@ class ParticleSwarmOptimizer(PM):
         
         for i in range(result_map.shape[-1]):
             for j in range(result_map.shape[0]):
-                result_map[j,:,:,i][np.isnan(mask[0,:,:,0])]=np.nan
+                result_map[j,:,:,i][np.isnan(mask)]=np.nan
         
         return result_map
             
