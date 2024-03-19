@@ -31,8 +31,8 @@ np.random.seed(0)
 ###############################################################################
 
 # data and save path
-NII_dataPath  = 'S:/JIMM/invivoData/DZNE_data/nifti'
-NII_savePath  = 'S:/JIMM/invivoData/grafics'
+NII_dataPath  = 'S:/JIMM/MWF_invivo/DZNE_data/nifti'
+NII_savePath  = 'S:/JIMM/MWF_invivo/grafics'
 NII_keyString = None
 # invivo data files
 T1_File       = 'NO_FILE'                  # (not measured in the 2023 session)
