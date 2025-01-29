@@ -15,7 +15,6 @@ import helpTools         as     hlp
 from   PSOparameters     import Parameters   as PM
 
 
-
 class ParticleSwarmOptimizer(PM):
         
     '''

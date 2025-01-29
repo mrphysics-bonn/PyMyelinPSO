@@ -4,7 +4,7 @@ Main script for performing particle swarm optimization (PSO) on MRI invivo data.
 
 @author: Martin Kobe, martin.kobe@ufz.de, martin.kobe@email.de
 
-@status: 03.2024; part of the JIMM Project (DZNE Bonn & UFZ Leipzig)
+@status: 02.2025; part of the JIMM/JIMM2 Project (DZNE Bonn & UFZ Leipzig)
 """
 
 # import of necessary tools: built-in, installed
@@ -25,20 +25,19 @@ gmtTime   = time.strftime('%H:%M:%S', time.gmtime())
 # random necessary for comparability of PSO runs with different parameters
 np.random.seed(0)
 
-
 ###############################################################################
 ### User input area: definitions, specifications and initializations ##########
 ###############################################################################
 
 # data and save path
-NII_dataPath  = 'S:/JIMM/MWF_invivo/DZNE_data/nifti'
+NII_dataPath  = 'S:/PSOJIMM2/MWF_invivo/DZNE_data/nifti'
 NII_savePath  = 'S:/JIMM/MWF_invivo/grafics'
 NII_keyString = None
-# invivo data files
+# invivo data files from october 2024
 T1_File       = 'NO_FILE'                  # (not measured in the 2023 session)
-T2_File       = 'mese.nii'                 # multi echo spin echo 
-T2S_File      = 'megre_mean_mag.nii'       # multi echo gradient echo
-T2SP_File     = 'megre_mean_mag.nii'       # phase information of T2S
+T2_File       = 'mese_mean.nii'            # multi echo spin echo 
+T2S_File      = 'mege_mag_avg.nii'         # multi echo gradient echo
+T2SP_File     = 'mege_phs_avg.nii'         # phase information of T2S
 B1_File       = 'dream_corr_resampled.nii' # radiofrequency (RF) transmit field
 T2S_TE_File   = 'te.npy'                   # 1D-array of TE times
 # additional specifications
@@ -97,7 +96,6 @@ resultsDir    = [f'{NII_savePath}/100I400P30PSO/T2/DIRAC/',
                  f'{NII_savePath}/100I400P30PSO_3/T2T2S/DIRAC/',
                  f'{NII_savePath}/100I400P30PSO_4/T2/DIRAC/',
                  f'{NII_savePath}/100I400P30PSO_4/T2S/DIRAC/'] # list with a result dir
-
 
 ###############################################################################
 ### PSO algorithm preparation area: depends on Users input ####################
@@ -179,8 +177,10 @@ rootMWF = mwf_analysis(data_dir = NII_dataPath,
                        KW_T1    = T1_File,
                        KW_T2    = T2_File,
                        KW_T2S   = T2S_File,
-                       KW_T2SP  = T2SP_File,
+                       KW_T2SP  = T2SP_File,       # changed to phase data file
                        T2S_TE   = T2S_TE_File)
+
+sys.exit()
 
 # Calculation of system matrices using tony's mwf_analysis class
 PSO.init_MWF_Analysis(rootMWF, noSlice)
