@@ -12,6 +12,7 @@ Class and methods for visualizing PSO-derived results on invivo MRI data.
 import os, matplotlib, time
 import matplotlib.pyplot as plt
 import numpy             as np
+import imageio.v2        as imageio
 
 
 class PSOgrafics():
@@ -20,7 +21,7 @@ class PSOgrafics():
         pass   
         
     def plotIterTest(self,
-                     MWFclass: object,
+                     MWFdata:  object,
                      PSOclass: object,
                      position: tuple,
                      savepath: str,
@@ -28,18 +29,25 @@ class PSOgrafics():
 
         sig           = PSOclass.signType[0]
         yy,xx,noSlice = position[0], position[1], position[2]
-        savepath      = f'{savepath}/{string}/'
-
+        savepath      = f'{savepath}/{string[0]}/'
+        
         fig, ax       = plt.subplots(nrows=2, ncols=2, figsize=(12, 8), tight_layout=True)
         
-        ax[0,0].imshow(MWFclass.data.msk, cmap='gray')
-        ax[0,0].scatter(xx, yy, color='red')
+        ax[0,0].imshow(MWFdata, cmap=matplotlib.colormaps.get_cmap('viridis'), vmin=0, vmax=np.max(MWFdata))
+        ax[0,0].scatter(xx, yy, color='red', s=10)
         ax[0,0].set_xticks([]); ax[0,0].set_yticks([])
-        ax[0,0].set_title(f'MeasGrid for Pixel [{yy},{xx}] in Slice {noSlice}')
+        ax[0,0].set_title(f'Calculated MWF map for {PSOclass.signType[0]} signal on slice {noSlice}')
+        [sp.set_visible(False) for sp in ax[0,0].spines.values()]
 
-        ax[0,1].plot(MWFclass.tsig[sig], PSOclass.obsData[sig], 'k', linewidth=2)
-        ax[0,1].plot(MWFclass.tsig[sig], PSOclass.globSynDat[sig], markersize=2, linestyle='-', 
+        if sig == 'T2': 
+            timesteps = np.arange(0,24)
+        if sig == 'T2S': 
+            timesteps = np.arange(0,32)
+        
+        ax[0,1].plot(timesteps, PSOclass.obsData[sig], 'k', linewidth=2)
+        ax[0,1].plot(timesteps, PSOclass.globSynDat[sig], markersize=2, linestyle='-', 
                      marker='o', markeredgewidth=0.5, color='red', linewidth=2, markerfacecolor='lightpink')
+
         ax[0,1].set_title(f'{sig}: observed (black) vs. synthetic (red) signal')
         ax[0,1].set_ylim(np.min(PSOclass.obsData[sig]-0.1), np.max(PSOclass.obsData[sig])+0.1)
 
@@ -79,7 +87,7 @@ class PSOgrafics():
         ax[1,1].text(x_lim, ylim_max/10*9.5, text, va='top')
 
         os.makedirs(savepath, exist_ok=True)
-        plt.savefig(f'{savepath}pix_y-{yy}_x-{xx}.jpg', dpi=300, format='jpg')                
+        plt.savefig(f'{savepath}pix_y-{yy}_x-{xx}_iter{string[1]}.jpg', dpi=300, format='jpg')                
     
         plt.close()
 
@@ -93,18 +101,23 @@ class PSOgrafics():
                   string =   '',
                   **kwargs):
         
+        if PSOclass.signType[0] == 'T2S': upper = 0.5
+        if PSOclass.signType[0] == 'T2':  upper = 0.35
+        
         param     = kwargs.get('limit', (object,False))[0]
         paramBool = kwargs.get('limit', (object,False))[1]
+        performance_test = kwargs.get('performance_test', False)
         lim       = {sig:[] for sig in PSOclass.signType}
         
         if paramBool == False:            
             if PSOclass.noPeaks == 'GAUSS':                
                 for sig in PSOclass.signType:                    
-                    lim[sig] = [getattr(getattr(PSOclass, sig), PSOclass.noPeaks).m1,(0,1),
+                    lim[sig] = [getattr(getattr(PSOclass, sig), PSOclass.noPeaks).m1,
+                                getattr(getattr(PSOclass, sig), PSOclass.noPeaks).m1_sig,
                                 getattr(getattr(PSOclass, sig), PSOclass.noPeaks).m2,
                                 getattr(getattr(PSOclass, sig), PSOclass.noPeaks).m2_sig,
                                 getattr(getattr(PSOclass, sig), PSOclass.noPeaks).int2,
-                                (0,0.35), (0,0.005)]
+                                (0,upper), (0,0.005)]
             
             if PSOclass.noPeaks == 'DIRAC':                
                 for sig in PSOclass.signType:                    
@@ -116,7 +129,7 @@ class PSOgrafics():
                                 getattr(getattr(PSOclass, sig), PSOclass.noPeaks).m3_sig,
                                 getattr(getattr(PSOclass, sig), PSOclass.noPeaks).int2,
                                 getattr(getattr(PSOclass, sig), PSOclass.noPeaks).int3,
-                                (0,0.25), (0,0.005)]
+                                (0,upper), (0,0.005)]
         
         if paramBool == True:
             if PSOclass.noPeaks == 'GAUSS':                
@@ -131,7 +144,7 @@ class PSOgrafics():
                                 param[f'SynData{sig}']['m2'],param[f'SynData{sig}']['m2_sig'],
                                 param[f'SynData{sig}']['m3'],param[f'SynData{sig}']['m3_sig'],
                                 param[f'SynData{sig}']['integ2'],param[f'SynData{sig}']['integ3'],
-                                (0,0.25), (0,0.005)]        
+                                (0,0.35), (0,0.005)]        
 
         cmap = matplotlib.colormaps.get_cmap('viridis')
         cmap.set_bad(color='black')
@@ -143,17 +156,22 @@ class PSOgrafics():
             ind     = index
             
             if PSOclass.noPeaks=='GAUSS':
-                fig, ax = plt.subplots(2, 3, figsize=(12, 6))
+                fig, ax = plt.subplots(2, 4, figsize=(12, 6))
             
             if PSOclass.noPeaks=='DIRAC':
-                fig, ax = plt.subplots(2, 4, figsize=(14, 6))
+                fig, ax = plt.subplots(3, 4, figsize=(14, 6))
         
-        # GAUSS results - 0: m1   | 1: m1_sig | 2:  m2  | 3:  m2_sig | 4: int2 | -2: MWF   | -1: misfit
+        # GAUSS results - 0: m1   | 1: m1_sig | 2:  m2  | 3:  m2_sig | 4: int2 | 5: MWF | 6: MW_f | 7: FW_f | 8: phi | -1: misfit
         # DIRAC results - 0: m1   | 1: m1_sig | 2:  m2  | 3:  m2_sig | 4: m3   | 5: m3_sig | 
         #                 6: int2 | 7: int3   | -2: MWF | -1: misfit
-            im0 = ax[0,0].imshow(PSOres[-2,:,:,ind],cmap=cmap,vmin=_lim[-2][0],vmax=_lim[-2][1])
-            ax[0,0].set_title('MWF')
-            fig.colorbar(im0, ax=ax[0,0])
+        
+            # im0 = ax[0,0].imshow(PSOres[5,:,:,ind],cmap=cmap,vmin=_lim[5][0],vmax=_lim[5][1])
+            # ax[0,0].set_title('MWF')
+            # fig.colorbar(im0, ax=ax[0,0])
+            
+            # if performance_test == False:
+            #     ax[0,0].scatter(35, 35, color='red', s=6)
+            #     ax[0,0].scatter(55, 45, color='red', s=6)
         
             im1 = ax[0,1].imshow(PSOres[0,:,:,ind],cmap=cmap,vmin=_lim[0][0],vmax=_lim[0][1])
             ax[0,1].set_title('m1')
@@ -174,8 +192,21 @@ class PSOgrafics():
             im5 = ax[1,2].imshow(PSOres[3,:,:,ind],cmap=cmap,vmin=_lim[3][0],vmax=_lim[3][1])
             ax[1,2].set_title('m2_sig')
             fig.colorbar(im5, ax=ax[1,2])
-        
+
+            if PSOclass.noPeaks == 'GAUSS':
+                im0 = ax[0,0].imshow(PSOres[5,:,:,ind],cmap=cmap,vmin=_lim[5][0],vmax=_lim[5][1])
+                ax[0,0].set_title('MWF')
+                fig.colorbar(im0, ax=ax[0,0])
+                
+                im6 = ax[1,3].imshow(PSOres[4,:,:,ind],cmap=cmap,vmin=_lim[4][0],vmax=_lim[4][1])
+                ax[1,3].set_title('int2')
+                fig.colorbar(im6, ax=ax[1,3])
+                
             if PSOclass.noPeaks == 'DIRAC':
+                im0 = ax[0,0].imshow(PSOres[8,:,:,ind],cmap=cmap,vmin=_lim[8][0],vmax=_lim[8][1])
+                ax[0,0].set_title('MWF')
+                fig.colorbar(im0, ax=ax[0,0])
+                
                 im6 = ax[0,3].imshow(PSOres[4,:,:,ind],cmap=cmap,vmin=_lim[4][0],vmax=_lim[4][1])
                 ax[0,3].set_title('m3')
                 fig.colorbar(im6, ax=ax[0,3])
@@ -183,7 +214,15 @@ class PSOgrafics():
                 im7 = ax[1,3].imshow(PSOres[5,:,:,ind],cmap=cmap,vmin=_lim[5][0],vmax=_lim[5][1])
                 ax[1,3].set_title('m3_sig')
                 fig.colorbar(im7, ax=ax[1,3])
-        
+
+                im8 = ax[2,2].imshow(PSOres[6,:,:,ind],cmap=cmap,vmin=_lim[6][0],vmax=_lim[6][1])
+                ax[2,2].set_title('int2')
+                fig.colorbar(im8, ax=ax[2,2])
+                
+                im9 = ax[2,3].imshow(PSOres[7,:,:,ind],cmap=cmap,vmin=_lim[7][0],vmax=_lim[7][1])
+                ax[2,3].set_title('int3')
+                fig.colorbar(im9, ax=ax[2,3])
+                            
             for ii in range(ax.shape[0]*ax.shape[1]):
                 ax.flat[ii].axis('off')
                 ax.flat[ii].set_facecolor('b')
@@ -196,9 +235,12 @@ class PSOgrafics():
             fig.suptitle(f'Calculated {sig} map for {dist}. PSO iteration: {str(ind).zfill(2)}')
         
             if saveFig[1]==True:
-                savepath = f'{saveFig[0]}{string}/'
-                os.makedirs(savepath, exist_ok=True)
-                fig.savefig(f'{savepath}{sig}_ID_{str(ind).zfill(2)}.png', dpi=300, format='png')
+                if performance_test==True:
+                    fig.savefig(f'{saveFig[0]}.png', dpi=300, format='png')
+                else:
+                    savepath = f'{saveFig[0]}{string}/'
+                    os.makedirs(savepath, exist_ok=True)
+                    fig.savefig(f'{savepath}{sig}_ID_{str(ind).zfill(2)}.png', dpi=300, format='png')
 
             plt.close()
 
@@ -473,3 +515,19 @@ class PSOgrafics():
 
 ###############################################################################
 
+class PSOvideos():    
+    
+    def __init__(self):
+        
+        import imageio.v2        as imageio
+        
+        pass  
+    
+    def build_gif(self, filelist: list, savepath: str, fps=1, loops=0):        
+
+        images = []
+        
+        for filename in sorted(filelist):
+            images.append(imageio.imread(filename))
+
+        imageio.mimsave(f'{savepath}', images, duration=fps, loop=loops)

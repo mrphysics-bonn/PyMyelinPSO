@@ -1,10 +1,48 @@
-# Ignoriere den "Beispiel"-Ordner
+# Byte-compiled / optimized / DLL files
 __pycache__/
-DZNE_data/
-grafics/
-JIMM_repository/
-older_scripts/
+*.py[cod]
+*$py.class
 
-# Ignoriere eine bestimmte Datei
-maskSlice18.npy
-tutorial.docx
+# Virtual environments
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs & caches
+*.log
+*.tmp
+*.cache/
+*.pytest_cache/
+.ipynb_checkpoints/
+
+# Directories
+_development_archive
+archive/
+mask_development/
+NC_upload/
+Denoising/
+mask/
+synthetic\ data\ cube/
+output/
+segmentation/
+local\ search
+
+# Scripts & Files
+Transfer_from_folder_to_folder.py
+Upload_files_on_NextCloud.py
+Matlab_to_Python.py
+PSOmain_*.py
+PSOparameters_*.py
+PSOworkflow_*.py
+playing_around.py
+Untitled*.ipynb
+*_v2_*
+Development.ipynb

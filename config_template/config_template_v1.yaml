@@ -1,0 +1,54 @@
+# This configuration file controls functionalities for Particle Swarm Optimizing invivo MRI data
+# anything with (!!!!) behind the description will be implemented within the PSO class directly in future
+general:
+  PSO_vs:      "1.0.7"
+source:
+  file:
+    prj_dir:   'F:/JIMM2/MWF_invivo/DZNE_Data/24_10_10_c/'  # project directory
+    T1:        'NO_FILE'                     # (not measured in the 2023/2024 sessions)
+    T2:        'mese_run1.nii'               # multi echo spin echo
+    T2S:       'mege_mag_run1.nii'           # multi echo gradient echo
+    CT2S:      'mege_phs_run1.nii'           # T2S phase information
+    TE:        'te.npy'                      # 1D-array of TE times
+    B1:        'dream_corr_resampled.nii'    # radiofrequency (RF) transmit field
+  signal:
+    T1:        false                         # [True/False]
+    T2:        true                          # [True/False]
+    T2S:       false                         # [True/False]
+    T2SP:      false                         # [True/False]
+    SI:        true                          # [True/False]
+    JI:        false                         # [True/False]
+  data:
+    obs_data:   'invivo'                     # ['invivo', 'synt'] - for now we use only measured data
+    add_noise:  [false, 50]                  # [[True/False], level]
+    gauss_filt: [1.0,1.0,0]                  # spatial Gaussian smoothing filter using sigma as in [sx,sy,sz]
+    norm_max:   true                         # [True/False]
+#
+PSO_spec:
+  calc:
+    iter_test:
+      use:   false   # [True/False]
+      slice: 7       # integer of slice to use
+      pixli: [[45,45], [30,70]]
+      gif:   false   # create a gif from the pixels in the pixel list 'pixli'
+    PSO_slice:
+      use:   true    # [True/False]
+    PSO_pixel:
+      use:   false   # [True/False]
+  math:
+    width:  10       # gauss bell width at lim(y)-->0, which can be estimated within error intervall @around 6.5
+    batch:  16       # batch size / no curves for calculating GAUSS bells within the model room
+    njit:   false    # use / don't use numba njit acceleration
+  dyn:
+    rand:   [true,0] # np.random.seed for comparability of PSO runs with different random init parameters, default=0
+    slice:  18       # number of slice for data analysis --> being iterated through later
+    pixel:  [0,0]    # pixel for data analysis
+  iter:     100      # number of iteration while executing PSO
+  part:     400      # number of particles for executing PSO
+  PSO_iter :
+    slice:  1        # number of cycles of single PSO executions on a slice
+    pixel:  100      # number of cycles of single PSO executions on a pixel
+  lp_norm:  'L2'     # ['L1','L2']: LP-NORM --> L1-Norm: Manhattan & L2-Norm: Euclidean
+  mod_vec:  'V0'     # [V0,V1]: number of modelvectors --> V0: 2 & V1: 1
+  peaks:    'DIRAC'  # [2,3]: 2 peaks - m1(MW), m2(FW) | 3 peaks - m1(MW), m2(AW), m3(EW)
+  curve:    'GAUSS'  # ['GAUSS', 'DIRAC'] - GAUSS: integration over a bell-shape | DIRAC: integration using peaks without sigma
