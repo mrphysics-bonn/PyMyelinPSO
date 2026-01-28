@@ -324,7 +324,7 @@ class mwf_data():
         
         # nothing to do, slice is already prepped
         if (self.last_axis == axis) and (self.last_slice == slice_num) and self.prepped:
-            print(f'prep_status: {self.prepped}')
+            #print(f'prep_status: {self.prepped}')
             return
 
         # stores axis and slice number into an object
@@ -540,7 +540,7 @@ class mwf_analysis():
             print('axis, slice number   = (%s, %d)' % (axis, slice_num))
             print('min , max FA scaling = (%6.4f, %6.4f)' % (b1_min, b1_max))
 
-    def prep_synthetic_data(self, axis, slice_num,  signal_type, mwf_thresh=0.025, 
+    def prep_synthetic_data(self, data_path, axis, slice_num, signal_type, mwf_thresh=0.025, 
                             SNR=500.0, seed=5, nprocs=8, dmean=[], dstdv=[], 
                             x=0, y=0, complex_T2S=False, phases=[0,0,0], verbose=True):
         
@@ -559,8 +559,9 @@ class mwf_analysis():
         # __file__ is the absolute path of the actual python script
         self.data.axis      = axis
         self.data.slice_num = slice_num
-        
-        mwf_mean = nib.load('F:/JIMM2/MWF_invivo/Python_V.2.0.0_alpha/local search/sego_local_search/Atlas_Mean.nii')
+
+        mwf_mean = nib.load(data_path)
+        # mwf_mean = nib.load('F:/JIMM2/MWF_invivo/Python_V.2.0.0_alpha/local search/sego_local_search/Atlas_Mean.nii')
         # mwf_mean            = nib.load(os.path.join(
         #                                os.path.dirname(__file__), 'Atlas_Mean.nii.gz'))
         

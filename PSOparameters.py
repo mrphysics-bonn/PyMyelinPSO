@@ -1,10 +1,20 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: 2025 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 """
-Initial parameters for applying particle swarm optimizing (PSO) on invivo MRI data.
+Parameters for applying particle swarm optimization (PSO) to in vivo MRI data,
+including:
+    
+    InversionParams - signal model parameters as in the mwf_analysis class
+    PSOParams       - literature-based weight factors
+    T1/T2/T2SParams - intervals for model vector parameters
 
-@author: Martin Kobe, martin.kobe@ufz.de, martin.kobe@email.de
-
-@status: 03.2024; part of the JIMM Project (DZNE Bonn & UFZ Leipzig)
+Author: Martin Kobe
+Contact: martin.kobe@ufz.de; martin.kobe@email.de
+Status: November 2025
+Project affiliation: JIMM / JIMM2 (DZNE Bonn, UFZ Leipzig)
 """
 
 import numpy as np
@@ -13,58 +23,45 @@ class Parameters():
     
     def __init__(self):
         
-        self.Inversion = self.Inversion()
-        self.PSO       = self.PSO()
-        self.T1        = self.T1()
-        self.T2        = self.T2()
-        self.T2S       = self.T2S()    
+        self.Inv = self.InversionParams()
+        self.PSO = self.PSOParams()
+        self.T1  = self.T1Params()
+        self.T2  = self.T2Params()
+        self.T2S = self.T2SParams()    
     
-    class Inversion():
+    class InversionParams():
         
         def __init__(self):
             
             # General parameters
-            self.datSpaceSyn    = 20    # step size for the plot of the syn/calc Data
-            self.datSpaceT1     = 20    # step size for the plot of the syn/meas Data
-            self.datSpaceT2     = 24    # step size for the plot of the syn/meas Data # normally 24 --> why sego uses 60 ??? 
-            self.datSpaceT2S    = 32    # step size for the plot of the syn/meas Data # normally 32 --> why sego uses 60 ??? 
-            self.modSpace       = 1000  # step size for integration
-            self.SNR            = 100   # relatively added noice 1/SNR
+            self.n_echoes_T1  = 20    # number of echo times for T1
+            self.n_echoes_T2  = 24    # number of echo times for T2
+            self.n_echoes_T2S = 32    # number of echo times for T2S (mag & phs)
+            self.mod_space    = 1000  # number of samples in the model space
             
-            # T1 parameters for generation of observed data from MWF
-            self.T1_TR          = 4      # repetition time
-            self.T1_alpha       = 4.0    # ???
-            self.T1_TD          = 1000.0 # ???
-            self.T1_IE          = 0.95   # ???
-            self.T1min          = 1      # integration lower border
-            self.T1max          = 2000   # integration upper border
-            self.T1_timepoints  = np.linspace(1, 5000, self.datSpaceT1)
+            # T1 model parameters
+            self.T1_TR    = 4      # repetition time [ms]
+            self.T1_alpha = 4.0    # excitation flip angle [deg]
+            self.T1_TD    = 1000   # variable inversion-recovery delay [ms]
+            self.T1_IE    = 0.95   # inversion efficiency
+            self.T1_min   = 1      # lower bound of T1 search space [ms]
+            self.T1_max   = 2000   # upper bound of T1 search space [ms]
             
-            # T2** parameters for generation of observed data from MWF
-            self.T2Smin         = 1     # integration lower boarder
-            self.T2Smax         = 200   # integration upper boarder
-            self.T2S_timepoints = np.linspace(1, 150, self.datSpaceT2S)
+            # T2 model parameters
+            self.T2_min   = 1      # lower bound of T2 search space [ms]    
+            self.T2_max   = 200    # upper bound of T2 search space [ms]
+            self.T2_TE    = 6.6    # echo time / step size [ms]
+            self.T2_TR    = 2000   # repetition time [ms]
+            self.T2_alpha = 90     # excitation flip angle [deg]
+            self.T2_beta  = 160    # refocusing flip angle [deg]
+            self.T2_ETL   = self.n_echoes_T2  # echo train length
+            self.T2_T1    = 1000   # T₁ relaxation time used in the model [ms]             
+                        
+            # T2S model parameters
+            self.T2S_min  = 1      # lower bound of T2S search space [ms]
+            self.T2S_max  = 200    # upper bound of T2S search space [ms]
             
-            # T2 parameters for generation of observed data from MWF
-            # --> multi-Spin-Echo (mSE) sequence parameters
-            # --> original TE: 5 / flipangle: 120
-            # --> Test#1: 5/180  und  Test#2: 6/180
-            # te: echo time
-            # tr: repetition time
-            # T2_T1: integration room size
-            self.T2min            = 1                        # 1    | sego: 1             
-            self.T2max            = 200                      # 200  | sego: 200
-            self.T2_TE            = 6.6                      # 6.6  | sego: 6.0
-            self.T2_TR            = 2000                     # 900  | sego: 2000
-            self.T2_alpha         = 90                       # 70   | sego: 90
-            self.T2_beta          = 160                      # 180  | sego: 160
-            self.T2_ETL           = self.datSpaceT2          # 24   | sego: 24
-            self.T2_T1            = 1000                     # 1000 | sego: 1000
-            self.T2epg_timepoints = np.linspace(self.T2_TE, 
-                                                self.T2_ETL*self.T2_TE, 
-                                                self.T2_ETL)
-            
-    class PSO():
+    class PSOParams():
         
         def __init__(self):
             
@@ -72,152 +69,126 @@ class Parameters():
             self.c1     = 1.4962  # social weight factor
             self.c2     = 1.4962  # cognitive weight factor
             
-    class T1():
+    class T1Params():
         
         def __init__(self):
             
-            self.GAUSS = self.GAUSS()
-            self.DIRAC = self.DIRAC()
+            self.TwoComponentParams   = self.TwoComponentParams()
+            self.ThreeComponentParams = self.ThreeComponentParams()
         
-        class GAUSS():
+        class TwoComponentParams():
             
             def __init__(self):         
-                self.noPara = 6            # model vector size
-                self.m1     = (50,   300)  # center of the gaussian, 1st peak  
-                self.m1_sig = (0.1,  50)   # standard deviation of m1
-                self.m2     = (700,  1300) # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1,  150)  # standard deviation of m2
-                self.int2   = (0.1,  5)    # area under the curve of m2 gaussian
-                self.MWF    = (0,    0.85) # typical intervall of MWF in a MRT
+                self.n_param = 6           # model vector size
+                self.m1      = (50,  300)  # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.1, 50)   # std (σ) / 1st Gaussian width
+                self.m2      = (700, 1300) # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.1, 150)  # std (σ) / 2nd Gaussian width
+                self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
+                self.MWF     = (0,   0.85) # myelin water fraction (integral)
 
-        class DIRAC():
+        class ThreeComponentParams():
             
             def __init__(self):         
-                self.noPara = 9            # model vector size
-                self.m1     = (50,   300)  # center of the gaussian, 1st peak  
-                self.m1_sig = (0.1,  10)  # standard deviation of m1
-                self.m2     = (700,  1300) # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1,  10)  # standard deviation of m2
-                self.m3     = (1300, 2000) # center of the gaussian, 3rd peak
-                self.m3_sig = (0.1,  0.1)  # standard deviation of m2
-                self.int2   = (0.1,  5)    # area under the curve of m2 gaussian
-                self.int3   = (0.1,  5)    # area under the curve of m3 gaussian
-                self.MWF    = (0,    0.85) # typical intervall of MWF in a MRT
+                self.n_param = 9            # model vector size 
+                self.m1      = (50,   300)  # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.1,  10)   # std (σ) / 1st Gaussian width
+                self.m2      = (700,  1300) # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.1,  10)   # std (σ) / 2nd Gaussian width
+                self.m3      = (1300, 2000) # mean (μ) / 3rd Gaussian center
+                self.m3_sig  = (0.1,  0.1)  # std (σ) / 3rd Gaussian width
+                self.int2    = (0.1,  5)    # area under the 2nd Gaussian (integral) 
+                self.int3    = (0.1,  5)    # area under the 3rd Gaussian (integral) 
+                self.MWF     = (0,    0.85) # myelin water fraction (integral)
                 
-    class T2():
+    class T2Params():
         
         def __init__(self):
             
-            self.GAUSS = self.GAUSS()
-            self.DIRAC = self.DIRAC()
+            self.TwoComponentParams   = self.TwoComponentParams()
+            self.ThreeComponentParams = self.ThreeComponentParams()
         
-        class GAUSS():
-
+        class TwoComponentParams():
+            
             def __init__(self):
-                self.noPara = 6           # model vector size
-                self.m1     = (10,  25)   # center of the gaussian, 1st peak 
-                self.m1_sig = (0.1, 0.1)  # standard deviation of m1
-                self.m2     = (60,  100)   # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1, 0.5)  # standard deviation of m2
-                self.int2   = (0.1, 10)   # area under the curve of m2 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT   
+                self.n_param = 6           # model vector size
+                self.m1      = (10,  25)   # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.1, 0.1)  # std (σ) / 1st Gaussian width
+                self.m2      = (60,  100)  # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.1, 0.5)  # std (σ) / 2nd Gaussian width
+                self.int2    = (0.1, 10)   # area under the 2nd Gaussian (integral) 
+                self.MWF     = (0,   0.85) # myelin water fraction (integral)
             
             # def __init__(self):
-            #     self.noPara = 6           # model vector size
-            #     self.m1     = (10,  25)   # center of the gaussian, 1st peak 
-            #     self.m1_sig = (0.1, 0.1)  # standard deviation of m1
-            #     self.m2     = (60,  85)   # center of the gaussian, 2nd peak 
-            #     self.m2_sig = (0.1, 0.5)  # standard deviation of m2
-            #     self.int2   = (0.1, 10)   # area under the curve of m2 gaussian
-            #     self.MWF    = (0,   0.85) # typical intervall of MWF in a MRT   
-            
-        # class DIRAC():
-            
-        #     def __init__(self):
-        #         self.noPara = 9            # model vector size
-        #         self.m1     = (5,   25)    # center of the gaussian, 1st peak 
-        #         self.m1_sig = (0.1, 10)  # standard deviation of m1
-        #         self.m2     = (45,  85)    # center of the gaussian, 2nd peak 
-        #         self.m2_sig = (0.1, 10)  # standard deviation of m2
-        #         self.m3     = (85,  150)   # center of the gaussian, 3rd peak
-        #         self.m3_sig = (0.1, 10)  # standard deviation of m2
-        #         self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-        #         self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
-        #         self.MWF    = (0,   0.85)  # typical intervall of MWF in a MRI
+            #     self.n_param = 6           # model vector size
+            #     self.m1      = (10,  25)   # mean (μ) / 1st Gaussian center
+            #     self.m1_sig  = (0.1, 0.1)  # std (σ) / 1st Gaussian width
+            #     self.m2      = (60,  85)   # mean (μ) / 2nd Gaussian center
+            #     self.m2_sig  = (0.1, 0.5)  # std (σ) / 2nd Gaussian width
+            #     self.int2    = (0.1, 10)   # area under the 2nd Gaussian (integral) 
+            #     self.MWF     = (0,   0.85) # myelin water fraction (integral)
         
-        class DIRAC():
+        class ThreeComponentParams():
             
             def __init__(self):
-                self.noPara = 9           # model vector size
-                self.m1     = (5,   45)   # center of the gaussian, 1st peak 
-                self.m1_sig = (0.1, 0.10)   # standard deviation of m1
-                self.m2     = (60,  85)   # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1, 0.10)   # standard deviation of m2
-                self.m3     = (80,  110)  # center of the gaussian, 3rd peak
-                self.m3_sig = (0.1, 0.10)   # standard deviation of m2
-                self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-                self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI
-                
-                # self.noPara = 9           # model vector size
-                # self.m1     = (10,  25)   # center of the gaussian, 1st peak 
-                # self.m1_sig = (0.1, 0.10)   # standard deviation of m1
-                # self.m2     = (60,  85)   # center of the gaussian, 2nd peak 
-                # self.m2_sig = (0.1, 0.50)   # standard deviation of m2
-                # self.m3     = (80,  110)  # center of the gaussian, 3rd peak
-                # self.m3_sig = (0.1, 0.50)   # standard deviation of m2
-                # self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-                # self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
-                # self.MWF    = (0,   0.85) #
+                self.n_param = 9           # model vector size
+                self.m1      = (5,   45)   # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.1, 10) # std (σ) / 1st Gaussian width
+                self.m2      = (60,  85)   # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.1, 10) # std (σ) / 2nd Gaussian width
+                self.m3      = (90,  110)  # mean (μ) / 3rd Gaussian center
+                self.m3_sig  = (0.1, 10) # std (σ) / 3rd Gaussian width
+                self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
+                self.int3    = (0.1, 5)    # area under the 3rd Gaussian (integral) 
+                self.MWF     = (0,   0.85) # myelin water fraction (integral)
 
-    class T2S():
+    class T2SParams():
         
         def __init__(self):
-            
-            self.GAUSS = self.GAUSS()
-            self.DIRAC = self.DIRAC()
+            self.TwoComponentParams   = self.TwoComponentParams()
+            self.ThreeComponentParams = self.ThreeComponentParams()
         
-        class GAUSS():
+        class TwoComponentParams():
             
             def __init__(self):  
-                # self.noPara = (6,   9)    # model vector size
-                # self.m1     = (10,  25)    # center of the gaussian, 1st peak 
-                # self.m1_sig = (0.1, 0.1)  # standard deviation of m1
-                # self.m2     = (60,  90)   # center of the gaussian, 2nd peak 
-                # self.m2_sig = (0.1, 5)    # standard deviation of m2
-                # self.int2   = (0.1, 5)   # area under the curve of m2 gaussian
-                # self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI
-                # self.MW_f   = (-75, 75)   # frequency shift MW component (Hz)
-                # self.FW_f   = (-75, 75)   # frequency shift FW component (Hz)
-                # self.phi    = (-np.pi, np.pi)   # global phase shift
+                # self.n_param = 6           # model vector size
+                # self.m1      = (10,  25)   # mean (μ) / 1st Gaussian center
+                # self.m1_sig  = (0.1, 0.1)  # std (σ) / 1st Gaussian width
+                # self.m2      = (60,  90)   # mean (μ) / 2nd Gaussian center
+                # self.m2_sig  = (0.1, 5)    # std (σ) / 2nd Gaussian width
+                # self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
+                # self.MWF     = (0,   0.85) # myelin water fraction (integral)
+                # self.MW_f    = (-75, 75)   # frequency shift MW component (Hz)
+                # self.FW_f    = (-75, 75)   # frequency shift FW component (Hz)
+                # self.phi     = (-np.pi, np.pi) # global phase shift (rad)
                 
                 # for atlas
-                self.noPara = (6,   9)    # model vector size
-                self.m1     = (5,   20)   # center of the gaussian, 1st peak 
-                self.m1_sig = (0.1, 0.1)    # standard deviation of m1
-                self.m2     = (45,  65)  # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1, 0.1)   # standard deviation of m2
-                self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI
-                self.MW_f   = (-25, 25)   # frequency shift MW component (Hz)
-                self.FW_f   = (-25, 25)   # frequency shift FW component (Hz)
-                self.phi    = (0, 2*np.pi)   # global phase shift
-                # self.phi    = (-15, 15)   # global phase shift
+                self.n_param = 6            # model vector size
+                self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.1, 0.1)   # std (σ) / 1st Gaussian width
+                self.m2      = (60,  90)    # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.1, 0.5)   # std (σ) / 2nd Gaussian width
+                self.int2    = (0.1, 5)     # area under the 2nd Gaussian (integral) 
+                self.MWF     = (0,   0.85)  # myelin water fraction (integral)
+                self.MW_f    = (-25, 25)    # frequency shift MW component (Hz)
+                self.FW_f    = (-25, 25)    # frequency shift FW component (Hz)
+                self.phi     = (0, 2*np.pi) # global phase shift (rad)
+                # self.phi    = (-15, 15)  # global phase shift (rad)
 
-        class DIRAC():
+        class ThreeComponentParams():
             
             def __init__(self):
-                self.noPara = (9,   13)   # model vector size
-                self.m1     = (5,   25)   # center of the gaussian, 1st peak 
-                self.m1_sig = (0.1, 0.10)  # standard deviation of m1
-                self.m2     = (50,  80)   # center of the gaussian, 2nd peak 
-                self.m2_sig = (0.1, 0.10)  # standard deviation of m2
-                self.m3     = (90,  130)  # center of the gaussian, 3rd peak
-                self.m3_sig = (0.1, 0.10)  # standard deviation of m2
-                self.int2   = (0.1, 5)    # area under the curve of m2 gaussian
-                self.int3   = (0.1, 5)    # area under the curve of m3 gaussian
-                self.MWF    = (0,   0.85) # typical intervall of MWF in a MRI
-                self.MW_f   = (-75, 75)   # frequency shift MW component (Hz)
-                self.EW_f   = (-25, 25)   # frequency shift EW component (Hz)
-                self.AW_f   = (-25, 25)   # frequency shift AW component (Hz)                
-                self.phi    = (-15, 15)   # global phase shift                
+                self.n_param = 9            # model vector size
+                self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.1, 0.10)  # std (σ) / 1st Gaussian width
+                self.m2      = (50,  80)    # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.1, 0.10)  # std (σ) / 2nd Gaussian width
+                self.m3      = (90,  130)   # mean (μ) / 3rd Gaussian center
+                self.m3_sig  = (0.1, 0.10)  # std (σ) / 3rd Gaussian width
+                self.int2    = (0.1, 5)     # area under the 2nd Gaussian (integral) 
+                self.int3    = (0.1, 5)     # area under the 3rd Gaussian (integral) 
+                self.MWF     = (0,   0.85)  # myelin water fraction (integral)
+                self.MW_f    = (-25, 25)    # frequency shift MW component (Hz)
+                self.EW_f    = (-25, 25)    # frequency shift EW component (Hz)
+                self.AW_f    = (-25, 25)    # frequency shift AW component (Hz)                
+                self.phi     = (0, 2*np.pi) # global phase shift (rad)           

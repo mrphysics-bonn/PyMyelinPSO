@@ -1,0 +1,14 @@
+# General dependencies without version specifications
+wheel
+matplotlib
+numpy
+natsort
+nibabel
+scipy
+cython
+pymp-pypi
+numba
+jellyfish
+numexpr
+setuptools
+pyepg

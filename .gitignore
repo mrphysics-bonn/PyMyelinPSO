@@ -24,25 +24,8 @@ dist/
 .ipynb_checkpoints/
 
 # Directories
-_development_archive
-archive/
-mask_development/
-NC_upload/
-Denoising/
-mask/
-synthetic\ data\ cube/
-output/
 segmentation/
 local\ search
 
 # Scripts & Files
-Transfer_from_folder_to_folder.py
-Upload_files_on_NextCloud.py
-Matlab_to_Python.py
-PSOmain_v*.py
-PSOparameters_v*.py
-PSOworkflow_v*.py
-playing_around.py
-Untitled*.ipynb
-*_v2_*
-Development.ipynb
+ISMRM_2026.ipynb
