@@ -11,4 +11,5 @@ numba
 jellyfish
 numexpr
 setuptools
-pyepg
+cython
+pyepg @ git+https://github.com/mrphysics-bonn/EPGpp.git

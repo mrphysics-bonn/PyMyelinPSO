@@ -25,7 +25,9 @@ dist/
 
 # Directories
 segmentation/
-local\ search
+local\ search/
+PyMRI_PSO/visualization/
 
 # Scripts & Files
-ISMRM_2026.ipynb
+PyMRI_PSO/pso_examples*.ipynb
+README.txt
