@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 """
-Helper funtions for smooth PSO performance on invio/atlas T1, T2, T2S MRI data.
+Helper functions supporting efficient PSO execution on in-vivo and atlas MRI data.
 
 Author: Martin Kobe
 Contact: martin.kobe@ufz.de; martin.kobe@email.de

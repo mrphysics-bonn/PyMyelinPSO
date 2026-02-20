@@ -1,8 +1,8 @@
 """
-Modeling of Myelin Water Fraction (MWF) based on on relaxation MRI data (T2,T2star)
+Modeling of Myelin Water Fraction (MWF) based on relaxation MRI data (T2,T2star)
 
 Provides three classes:
-    - signal_models     defines T2 and T2star signal models (EPG and simple exponential decya)
+    - signal_models     defines T2 and T2star signal models (EPG and simple exponential decay)
     - mwf_data          loads T2 and T2star measurement data
     - mwf_analysis      perform MWF analysis on T2 and/or T2star data
 
