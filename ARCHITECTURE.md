@@ -4,6 +4,7 @@ PyMRI_PSO is structured into modular components that separate configuration,
 model definition, optimization logic, and visualization.
 
 PyMRI_PSO/
+
 ├──
 ├── pso_main_*.py           # Main PSO control scripts
 ├── pso_preparation_*.py    # PSO environment and system parameter preparation
@@ -19,18 +20,16 @@ PyMRI_PSO/
 1. pso_main_*.py  
 
   Main entry script for performing particle swarm optimization (PSO) on MRI invivo data.
-  All functionality is controlled via a user-defined configuration dictionary.
-
-  Contains:
+  All functionality is controlled via a user-defined configuration dictionary. Contains:
+  
     a) Preparation of the PSO environment based on the configuration
     b) Setup of parallel execution on multi-core systems
     c) Execution of PSO in the selected mode, including saving/returning results
 
 2. pso_preparation_*.py  
 
-  Preparation layer for PSO-based MRI inversion.
+  Preparation layer for PSO-based MRI inversion. Purpose:
   
-  Purpose:
     a) Loading observed MRI data (in-vivo and/or atlas-based)
     b) Loading or generating binary masks
     c) Construction of the full system model cube
@@ -58,6 +57,7 @@ PyMRI_PSO/
   Modeling of Myelin Water Fraction (MWF) based on relaxation MRI data (T2,T2star).
 
   Provides three classes:
+  
     a) signal_models   - T2 and T2* signal models (EPG and simple exponential)
     b) mwf_data        - data loading utilities
     c) mwf_analysis    - MWF estimation and analysis methods
@@ -76,9 +76,8 @@ PyMRI_PSO/
  
 8. pso_examples.ipynb
 
-	Comprehensive demonstration and documentation notebook.
-
-	Includes:
+	Comprehensive demonstration and documentation notebook, including:
+	
     a) Detailed documentation cell explaining architecture, workflow, and running modes  
     a) Demonstrations of different execution modes (slice-parallel, pixel-iterative, iteration-test)  
     a) Example configurations for single and joint inversion  

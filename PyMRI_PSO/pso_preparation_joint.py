@@ -28,8 +28,8 @@ import nibabel as     nib
 from   pathlib import Path
 
 import help_tools   as     hlp
-#from   mwf_modeling import mwf_analysis
-from   mwf_t1t2t2s  import mwf_analysis
+from   mwf_modeling import mwf_analysis
+#from   mwf_t1t2t2s  import mwf_analysis
 from   pso_core     import ParticleSwarmOptimizer as PSOclass
 
 
@@ -128,7 +128,7 @@ class PSOpreparation_JI(PSOclass):
         if self.data_type == 'invivo':
             self.root_mwf = mwf_analysis(data_dir = self.data_dir,
                                          KW_B1    = self.config.source.file.B1,
-                                         KW_T1    = self.config.source.file.T1,
+                                         #KW_T1    = self.config.source.file.T1,
                                          KW_T2    = self.config.source.file.T2,
                                          KW_T2S   = self.config.source.file.T2S,
                                          KW_T2SP  = self.config.source.file.CT2S,

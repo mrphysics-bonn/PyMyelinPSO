@@ -293,7 +293,7 @@ def run_pso_on_config(config_input: object, config_type: str, save_results=True)
     _signal_SI   = 'CT2S' if _PSO.inv_CT2S else _sig_list[0]
     _sig_calc    = _signal_SI if _signal_SI != 'CT2S' else 'T2S'
     _signal_src  = pre_analysis.data_source
-
+    
 ###############################################################################       
 ### (a) Performance/iteration test: ###########################################
 ###     --> number of iterations until convergence threshold is reached #######

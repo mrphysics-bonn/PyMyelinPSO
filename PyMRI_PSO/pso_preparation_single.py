@@ -28,8 +28,8 @@ import nibabel as     nib
 from   pathlib import Path
 
 import help_tools   as     hlp
-#from   mwf_modeling import mwf_analysis
-from   mwf_t1t2t2s  import mwf_analysis
+from   mwf_modeling import mwf_analysis
+#from   mwf_t1t2t2s  import mwf_analysis
 from   pso_core     import ParticleSwarmOptimizer as PSOclass
 
 

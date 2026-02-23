@@ -1,8 +1,8 @@
 """
-Modeling of Myelin Water Fraction (MWF) based on relaxation MRI data (T2,T2star)
+Modeling of Myelin Water Fraction (MWF) based on on relaxation MRI data (T2,T2star)
 
 Provides three classes:
-    - signal_models     defines T2 and T2star signal models (EPG and simple exponential decay)
+    - signal_models     defines T2 and T2star signal models (EPG and simple exponential decya)
     - mwf_data          loads T2 and T2star measurement data
     - mwf_analysis      perform MWF analysis on T2 and/or T2star data
 
@@ -35,6 +35,7 @@ if sys.platform == 'win32':
 
 # check for pyepg
 import pyepg
+
 
 class signal_models():
     """
@@ -89,9 +90,7 @@ class signal_models():
                         if n == sat_loops-1:       # after T1-saturation ...
                             return self.epg.GetMagFa(0)  # ... return signal amplitude after first echo! (i==0)
                     else:
-                        delay_steps = int (2*(tr-etl*te)/te )   # number of steps which fit in TR after echo train
-                        for m in range(delay_steps):            # TR delay
-                            self.epg.Step(0, 0)  
+                        self.epg.LongDelay(tr-etl*te) # TR delay
         # next step in echo train
         else:
             self.epg.Step(beta, 90, te/2)
