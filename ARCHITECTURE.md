@@ -1,8 +1,8 @@
 ## Architecture Overview
 
 PyMRI_PSO is structured into modular components that separate configuration,
-model definition, optimization logic, and visualization.
 
+<pre> ```
 PyMRI_PSO/
 
 ├──
@@ -14,6 +14,7 @@ PyMRI_PSO/
 ├── mwf_modeling.py         # MWF modeling based on in-vivo or atlas MRI data
 ├── help_tools.py           # Helper utilities
 ├── pso_examples.ipynb      # Example usage and documentation
+``` <pre>
 
 ## Module Overview
 
