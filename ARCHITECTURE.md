@@ -79,7 +79,7 @@ PyMRI_PSO/
  
 8. pso_examples.ipynb
 
-	Comprehensive demonstration and documentation notebook, including:
+  Comprehensive demonstration and documentation notebook, including:
 	
     a) Detailed documentation cell explaining architecture, workflow, and running modes  
     a) Demonstrations of different execution modes (slice-parallel, pixel-iterative, iteration-test)  
