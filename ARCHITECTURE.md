@@ -14,7 +14,7 @@ PyMRI_PSO/
 ├── mwf_modeling.py         # MWF modeling based on in-vivo or atlas MRI data
 ├── help_tools.py           # Helper utilities
 ├── pso_examples.ipynb      # Example usage and documentation
-<pre>
+</pre>
 
 ## Module Overview
 
