@@ -1,8 +1,8 @@
 ## Architecture Overview
 
+<pre>
 PyMRI_PSO is structured into modular components that separate configuration,
 
-<pre>
 PyMRI_PSO/
 
 ├──
@@ -17,6 +17,8 @@ PyMRI_PSO/
 </pre>
 
 ## Module Overview
+
+<pre>
 
 1. pso_main_*.py  
 
@@ -82,4 +84,5 @@ PyMRI_PSO/
     a) Detailed documentation cell explaining architecture, workflow, and running modes  
     a) Demonstrations of different execution modes (slice-parallel, pixel-iterative, iteration-test)  
     a) Example configurations for single and joint inversion  
-    a) Visualization of inversion results and diagnostic plots  
+    a) Visualization of inversion results and diagnostic plots
+</pre>
