@@ -1,3 +1,15 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2026 
+# German Centre for Neurodegenerative Diseases - DZNE
+# Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+#
+# Authors:
+#   Tony Stoecker (German Centre for Neurodegenerative Diseases - DZNE)
+#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
+#
+# This file is part of the PyMRI_PSO software.
+# See the LICENSE file in the project root for full license information.
+
 """
 Modeling of Myelin Water Fraction (MWF) based on on relaxation MRI data (T2,T2star)
 
@@ -5,8 +17,6 @@ Provides three classes:
     - signal_models     defines T2 and T2star signal models (EPG and simple exponential decya)
     - mwf_data          loads T2 and T2star measurement data
     - mwf_analysis      perform MWF analysis on T2 and/or T2star data
-
-Tony Stoecker, DZNE Bonn, 2026
 """
 
 import os

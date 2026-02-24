@@ -1,19 +1,18 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2025 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+#
+# Author:
+#   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
+#
+# This file is part of the PyMRI_PSO software.
+# See the LICENSE file in the project root for full license information.
 
 """
-Parameters for applying particle swarm optimization (PSO) to in vivo MRI data,
-including:
+Parameter definitions for particle swarm optimization (PSO) applied to in vivo MRI data.
     
-    InversionParams - signal model parameters as in the mwf_analysis class
+    InversionParams - signal model parameters (mwf_analysis)
     PSOParams       - literature-based weight factors
-    T1/T2/T2SParams - intervals for model vector parameters
-
-Contact: martin.kobe@ufz.de; martin.kobe@email.de
-Status: November 2025
-Project affiliation: JIMM / JIMM2 (DZNE Bonn, UFZ Leipzig)
+    T1/T2/T2SParams - parameter intervals for the model vector
 """
 
 import numpy as np
@@ -115,6 +114,7 @@ class Parameters():
                 # self.int2    = (0.1, 10)   # area under the 2nd Gaussian (integral) 
                 # self.MWF     = (0,   0.85) # myelin water fraction (integral)
             
+            # # for atlas
             def __init__(self):
                 self.m1      = (10,  25)   # mean (μ) / 1st Gaussian center
                 self.m1_sig  = (0.1, 0.1)  # std (σ) / 1st Gaussian width

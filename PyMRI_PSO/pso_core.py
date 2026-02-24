@@ -1,16 +1,17 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+#
+# Authors:
+#   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
+#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
+#   Hendrik Paasche (Helmholtz Centre for Environmental Research - UFZ)
+#
+# This file is part of the PyMRI_PSO software.
+# See the LICENSE file in the project root for full license information.
 
 """
 Class for applying particle swarm optimization (PSO) to in vivo MRI data,
 including PSO methods and additional PSO-related helper functions.
-
-Author: Martin Kobe
-Contact: martin.kobe@ufz.de; martin.kobe@email.de
-Status: January 2026
-Project affiliation: JIMM / JIMM2 (DZNE Bonn, UFZ Leipzig)
 """
 
 import time, os, copy, json

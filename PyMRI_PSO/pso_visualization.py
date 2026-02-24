@@ -1,16 +1,15 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+#
+# Author:
+#   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
+#
+# This file is part of the PyMRI_PSO software.
+# See the LICENSE file in the project root for full license information.
 
 """
 Exemplary methods for visualization of PSO results from single/joint inversion
 of MRI invivo data (T2, T2S, CT2S).
-
-Author: Martin Kobe
-Contact: martin.kobe@ufz.de; martin.kobe@email.de
-Status: January 2026
-Project affiliation: JIMM / JIMM2 (DZNE Bonn, UFZ Leipzig)
 """
 
 import os, matplotlib, copy

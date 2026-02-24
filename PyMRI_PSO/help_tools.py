@@ -1,33 +1,22 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+#
+# Authors:
+#   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
+#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
+#
+# This file is part of the PyMRI_PSO software.
+# See the LICENSE file in the project root for full license information.
 
 """
 Helper functions supporting efficient PSO execution on in-vivo and atlas MRI data.
-
-Author: Martin Kobe
-Contact: martin.kobe@ufz.de; martin.kobe@email.de
-Status: January 2026
-Project affiliation: JIMM / JIMM2 (DZNE Bonn, UFZ Leipzig)
 """
 
-# had to be installed: nibabel, natsort
-# a) nibabel can open the typical MRT imaging format .nii
-# --> NIfTI-Format (Neuroimaging Informatics Technology Initiative)
-# b) natsort sorts a list for natural keys, such as integers
-# --> MEMO: ich habe sowas schonmal für Uli geschrieraussuchen
-            
-# had to be installed: EPYG
-# Extended Phase Graphs in Python (by Daniel Brenner, Bonn, 2016)
-# --> https://github.com/JIMM-MRI/EPYG
-
 import sys, yaml, json, time, matplotlib
-from   numba             import njit
-import numpy                       as     np
-
-import matplotlib.pyplot           as     plt
-from   matplotlib.widgets          import RectangleSelector
+from   numba               import njit
+import numpy               as     np
+import matplotlib.pyplot   as     plt
+from   matplotlib.widgets  import RectangleSelector
 
 ###############################################################################
 # define a binary mask for an image: 0 is masked, 1 is visible

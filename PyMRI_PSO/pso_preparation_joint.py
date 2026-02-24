@@ -1,7 +1,11 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+#
+# Author:
+#   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
+#
+# This file is part of the PyMRI_PSO software.
+# See the LICENSE file in the project root for full license information.
 
 """
 Side script for preparing particle swarm optimization (PSO) on MRI invivo data.
@@ -15,11 +19,6 @@ Purpose:
     c2) Data pre-processing, B1 handling, model setup (T1, T2, T2S).
     d) Fills the system parameters dictionary used in the PSO analysis for one 
        or multiple data cube slices of interest.
-
-Author: Martin Kobe
-Contact: martin.kobe@ufz.de; martin.kobe@email.de
-Status: January 2026
-Project affiliation: JIMM / JIMM2 (DZNE Bonn, UFZ Leipzig)
 """
 
 import os, time, copy
