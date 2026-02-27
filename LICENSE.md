@@ -1,14 +1,16 @@
+# muss noch überarbeitet werden
+
 <!--
-SPDX-FileCopyrightText: 2025 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
 # SOFTWARE LICENCE
 
-This file is part of the "PyExpress" software developed by
+This file is part of the "PyMyelinPSO" software developed in cooperation by
 the Monitoring and Exploration Technologies Team of the Helmholtz Centre for Environmental
-Research - UFZ.
+Research - UFZ, Leipzig, and the MR Physics group of the German Centre for Neurodegenerative Diseases - DZNE, Bonn.
 
 # Copyright Notice
 
