@@ -1,11 +1,11 @@
-# SPDX-License-Identifier: BSD-3-Clause
-# Copyright (c) 2026 Helmholtz-Zentrum f√ºr Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:
 #   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
 #
-# This file is part of the PyMRI_PSO software.
-# See the LICENSE file in the project root for full license information.
+# This file is part of PyMyelinPSO.
+# See the LICENSE file in the project root for license information.
 
 """
 Exemplary methods for visualization of PSO results from single/joint inversion
@@ -179,7 +179,7 @@ class PSOPlotter():
 
         plt.show()
         
-    def comp_preanalysis_states(self, inv_data: np.array, param: list(), inv_type='single',
+    def comp_preanalysis_states(self, inv_data: dict, param: list(), inv_type='single',
                                 save_path=None, save_format=None, save_dpi=300, save=False, verbose=False):
         
         """
@@ -187,7 +187,8 @@ class PSOPlotter():
         for three datasets.
         
         Args:
-            inv_data: inverted pso model vector array with shape
+            inv_data: dictionary shape {dataset: {preprocessing state: model vector array}}
+                containing PSO model vectors stored in arrays of shape
                 [x, y, n_parameters, n_pso_cycles + 1]
             param: (index, name), where index corresponds to the
                     parameter name position in the model vector array
@@ -767,10 +768,14 @@ class PSOPlotter():
         
         fig, ax   = plt.subplots(nrows=2, ncols=2, figsize=(12, 8), tight_layout=True)
         
+        # cut
+        ax[0,0].set_xlim(10, 100)
+        ax[0,0].set_ylim(10, 100)
+
         ax[0,0].imshow(mwf_data, cmap=matplotlib.colormaps.get_cmap('viridis'), vmin=0, vmax=np.nanmax(mwf_data))
         ax[0,0].scatter(xx, yy, color='red', s=10)
         ax[0,0].set_xticks([]); ax[0,0].set_yticks([])
-        ax[0,0].set_title(f'2D map of {sig} signal summed over echoes')
+        ax[0,0].set_title(f'2D map of {sig_label} signal summed over echoes')
         [sp.set_visible(False) for sp in ax[0,0].spines.values()]
 
         if sig == 'T2': 
@@ -783,13 +788,13 @@ class PSOPlotter():
             ax[0,1].plot(timesteps, pso_class.glob_syn_data[sig], markersize=2, linestyle='-', 
                          marker='o', markeredgewidth=0.5, color='red', linewidth=2, markerfacecolor='lightpink')    
             ax[0,1].set_title(f'{sig_label}: observed (black) vs. synthetic (red) signal')
-            ax[0,1].set_ylim(np.min(pso_class.obs_decay[sig]-0.1), np.max(pso_class.obs_decay[sig])+0.1)        
+            #ax[0,1].set_ylim(np.min(pso_class.obs_decay[sig]-0.1), np.max(pso_class.obs_decay[sig])+0.1)        
         else:
             ax[0,1].plot(timesteps, np.abs(pso_class.obs_decay[sig]), 'k', linewidth=2)
             ax[0,1].plot(timesteps, np.abs(pso_class.glob_syn_data[sig]), markersize=2, linestyle='-', 
                          marker='o', markeredgewidth=0.5, color='red', linewidth=2, markerfacecolor='lightpink')    
             ax[0,1].set_title(f'{sig_label}: observed (black) vs. synthetic (red) signal')
-            ax[0,1].set_ylim(np.min(np.abs(pso_class.obs_decay[sig]-0.1)), np.max(np.abs(pso_class.obs_decay[sig])+0.1))
+            #ax[0,1].set_ylim(np.min(np.abs(pso_class.obs_decay[sig]-0.1)), np.max(np.abs(pso_class.obs_decay[sig])+0.1))
 
         ax[1,0].plot(np.arange(0, len(pso_class.glob_ind_list[sig]), 1), pso_class.glob_ind_list[sig], 
                      markersize=2, linestyle='None', marker='o', color='b')
@@ -797,7 +802,7 @@ class PSOPlotter():
         ax[1,0].set_xlim(-0.5, pso_class.n_iter+0.5)
         ax[1,0].set_xticks(np.arange(0, pso_class.n_iter+1, int(pso_class.n_iter/5)), 
                            np.arange(0, pso_class.n_iter+1, int(pso_class.n_iter/5), dtype=int))
-        ax[1,0].set_yticks(np.arange(0,pso_class.n_part+1,pso_class.n_part/10))
+        ax[1,0].set_yticks(np.arange(0,pso_class.n_part+1,pso_class.n_part//10))
         ax[1,0].set_title('global best particle')   
         
         ylim_min = np.min(pso_class.glob_fit_list[sig])-np.min(pso_class.glob_fit_list[sig])/3
@@ -819,9 +824,11 @@ class PSOPlotter():
             n -= 1
         rounded_number = round(value, 3)
         value = f'{rounded_number} * 10e{n}'
-
+        
+        ind_MWF = 5 if pso_class.n_comp == 2 else 8
+        
         text  = (f'glob best [px: fit]:\n{pso_class.glob_ind[sig]+1}: {value}\n\n'
-                 f'MWFcalc: {np.round(pso_class.glob_mod[sig][-1], 4)}\n'
+                 f'MWFcalc: {np.round(pso_class.glob_mod[sig][ind_MWF], 4)}\n'
                  f'IterThresh ({thresh}%): {n_iter}')
         
         x_lim = (pso_class.n_iter+1)/10*7

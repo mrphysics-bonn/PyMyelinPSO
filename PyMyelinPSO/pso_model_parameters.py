@@ -1,11 +1,13 @@
-# SPDX-License-Identifier: BSD-3-Clause
-# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:
 #   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
 #
-# This file is part of the PyMRI_PSO software.
-# See the LICENSE file in the project root for full license information.
+# This file is part of PyMyelinPSO.
+# See the LICENSE file in the project root for license information.
+
+# -*- coding: utf-8 -*-
 
 """
 Parameter definitions for particle swarm optimization (PSO) applied to in vivo MRI data.
@@ -53,7 +55,7 @@ class Parameters():
             self.T2_alpha = 90     # excitation flip angle [deg]
             self.T2_beta  = 160    # refocusing flip angle [deg]
             self.T2_ETL   = self.n_echoes_T2  # echo train length
-            self.T2_T1    = 1000   # T₁ relaxation time used in the model [ms]             
+            self.T2_T1    = 1000   # T‚ÇÅ relaxation time used in the model [ms]             
                         
             # T2S model parameters
             self.T2S_min  = 1      # lower bound of T2S search space [ms]
@@ -78,9 +80,9 @@ class Parameters():
             
             def __init__(self):         
                 self.m1      = (50,  300)  # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.1, 50)   # std (σ) / 1st Gaussian width
+                self.m1_sig  = (0.1, 50)   # std (σ)  / 1st Gaussian width
                 self.m2      = (700, 1300) # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.1, 150)  # std (σ) / 2nd Gaussian width
+                self.m2_sig  = (0.1, 150)  # std (σ)  / 2nd Gaussian width
                 self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
                 self.MWF     = (0,   0.85) # myelin water fraction (integral)
 
@@ -88,11 +90,11 @@ class Parameters():
             
             def __init__(self):         
                 self.m1      = (50,   300)  # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.1,  10)   # std (σ) / 1st Gaussian width
+                self.m1_sig  = (0.1,  10)   # std (σ)  / 1st Gaussian width
                 self.m2      = (700,  1300) # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.1,  10)   # std (σ) / 2nd Gaussian width
+                self.m2_sig  = (0.1,  10)   # std (σ)  / 2nd Gaussian width
                 self.m3      = (1300, 2000) # mean (μ) / 3rd Gaussian center
-                self.m3_sig  = (0.1,  0.1)  # std (σ) / 3rd Gaussian width
+                self.m3_sig  = (0.1,  0.1)  # std (σ)  / 3rd Gaussian width
                 self.int2    = (0.1,  5)    # area under the 2nd Gaussian (integral) 
                 self.int3    = (0.1,  5)    # area under the 3rd Gaussian (integral) 
                 self.MWF     = (0,    0.85) # myelin water fraction (integral)
@@ -117,9 +119,9 @@ class Parameters():
             # # for atlas
             def __init__(self):
                 self.m1      = (10,  25)   # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.5, 0.5)  # std (σ) / 1st Gaussian width
+                self.m1_sig  = (0.5, 1)    # std (σ)  / 1st Gaussian width
                 self.m2      = (60,  100)  # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.5, 0.5)  # std (σ) / 2nd Gaussian width
+                self.m2_sig  = (0.5, 1)    # std (σ)  / 2nd Gaussian width
                 self.int2    = (0.1, 10)   # area under the 2nd Gaussian (integral) 
                 self.MWF     = (0,   0.85) # myelin water fraction (integral)
         
@@ -127,11 +129,11 @@ class Parameters():
             
             def __init__(self):
                 self.m1      = (5,   45)   # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.1, 10) # std (σ) / 1st Gaussian width
+                self.m1_sig  = (0.1, 10)   # std (σ)  / 1st Gaussian width
                 self.m2      = (60,  85)   # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.1, 10) # std (σ) / 2nd Gaussian width
+                self.m2_sig  = (0.1, 10)   # std (σ)  / 2nd Gaussian width
                 self.m3      = (90,  110)  # mean (μ) / 3rd Gaussian center
-                self.m3_sig  = (0.1, 10) # std (σ) / 3rd Gaussian width
+                self.m3_sig  = (0.1, 10)   # std (σ)  / 3rd Gaussian width
                 self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
                 self.int3    = (0.1, 5)    # area under the 3rd Gaussian (integral) 
                 self.MWF     = (0,   0.85) # myelin water fraction (integral)
@@ -145,21 +147,21 @@ class Parameters():
         class TwoComponentParams():
             
             def __init__(self):  
-                self.m1      = (5,   25)   # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.1, 0.1)  # std (σ) / 1st Gaussian width
-                self.m2      = (45,  75)   # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.1, 0.5)  # std (σ) / 2nd Gaussian width
-                self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
-                self.MWF     = (0,   0.85) # myelin water fraction (integral)
-                self.MW_f    = (-25, 25)   # frequency shift MW component (Hz)
-                self.FW_f    = (-25, 25)   # frequency shift FW component (Hz)
+                self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
+                self.m1_sig  = (0.5, 1)     # std (σ)  / 1st Gaussian width
+                self.m2      = (45,  100)   # mean (μ) / 2nd Gaussian center
+                self.m2_sig  = (0.5, 1)     # std (σ)  / 2nd Gaussian width
+                self.int2    = (0.1, 10)    # area under the 2nd Gaussian (integral) 
+                self.MWF     = (0,   0.85)  # myelin water fraction (integral)
+                self.MW_f    = (-75, 75)    # frequency shift MW component (Hz)
+                self.FW_f    = (-75, 75)    # frequency shift FW component (Hz)
                 self.phi     = (0, 2*np.pi) # global phase shift (rad)
                 
                 # # for atlas
                 # self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
-                # self.m1_sig  = (0.1, 0.1)   # std (σ) / 1st Gaussian width
+                # self.m1_sig  = (0.1, 0.1)   # std (σ)  / 1st Gaussian width
                 # self.m2      = (45,  65)    # mean (μ) / 2nd Gaussian center (60, 90)
-                # self.m2_sig  = (0.1, 0.5)   # std (σ) / 2nd Gaussian width
+                # self.m2_sig  = (0.1, 0.5)   # std (σ)  / 2nd Gaussian width
                 # self.int2    = (0.1, 5)     # area under the 2nd Gaussian (integral) 
                 # self.MWF     = (0,   0.85)  # myelin water fraction (integral)
                 # self.MW_f    = (-25, 25)    # frequency shift MW component (Hz)
@@ -170,11 +172,11 @@ class Parameters():
             
             def __init__(self):
                 self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.1, 0.10)  # std (σ) / 1st Gaussian width
+                self.m1_sig  = (0.1, 0.10)  # std (σ)  / 1st Gaussian width
                 self.m2      = (50,  80)    # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.1, 0.10)  # std (σ) / 2nd Gaussian width
+                self.m2_sig  = (0.1, 0.10)  # std (σ)  / 2nd Gaussian width
                 self.m3      = (90,  130)   # mean (μ) / 3rd Gaussian center
-                self.m3_sig  = (0.1, 0.10)  # std (σ) / 3rd Gaussian width
+                self.m3_sig  = (0.1, 0.10)  # std (σ)  / 3rd Gaussian width
                 self.int2    = (0.1, 5)     # area under the 2nd Gaussian (integral) 
                 self.int3    = (0.1, 5)     # area under the 3rd Gaussian (integral) 
                 self.MWF     = (0,   0.85)  # myelin water fraction (integral)

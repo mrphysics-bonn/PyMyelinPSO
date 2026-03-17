@@ -31,3 +31,5 @@ PyMyelinPSO/visualization/
 # Scripts & Files
 PyMyelinPSO/development*.ipynb
 PyMyelinPSO/paper_examples.ipynb
+PyMyelinPSO/pso_examples_archiv.ipynb
+PyMyelinPSO/mwf_t1t2t2s.py

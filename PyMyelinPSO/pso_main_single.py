@@ -1,11 +1,11 @@
-# SPDX-License-Identifier: BSD-3-Clause
-# Copyright (c) 2026 Helmholtz-Zentrum f√ºr Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:
 #   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
 #
-# This file is part of the PyMRI_PSO software.
-# See the LICENSE file in the project root for full license information.
+# This file is part of PyMyelinPSO.
+# See the LICENSE file in the project root for license information.
 
 """
 Main script for performing particle swarm optimization (PSO) on MRI invivo data.
@@ -367,7 +367,7 @@ def run_pso_on_config(config_input: object, config_type: str, save_results=True)
             print(f'Pixel [{yy},{xx}]: Number of iterations before threshold is reached: {np.where(mask)[0][-1]+2}\n')
             print(f'\nSaved results to \n{os.path.dirname(save_path)}.\n')
 
-        return 
+        return PSO, pre_analysis
 
 ###############################################################################    
 ### (b.1) Parallelized calculation of MWF for one slice and with n PSO cycles

@@ -1,12 +1,12 @@
-# SPDX-License-Identifier: BSD-3-Clause
-# Copyright (c) 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
 #   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
-#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
+#   Segolene Dega (Helmholtz Centre for Environmental Research - UFZ)
 #
-# This file is part of the PyMRI_PSO software.
-# See the LICENSE file in the project root for full license information.
+# This file is part of PyMyelinPSO.
+# See the LICENSE file in the project root for license information.
 
 """
 Helper functions supporting efficient PSO execution on in-vivo and atlas MRI data.

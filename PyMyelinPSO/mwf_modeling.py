@@ -1,13 +1,12 @@
-# SPDX-License-Identifier: BSD-3-Clause
-# Copyright (c) 2026 
-# German Centre for Neurodegenerative Diseases - DZNE
-# Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 German Center for Neurodegenerative Diseases - DZNE
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
 #   Tony Stoecker (German Centre for Neurodegenerative Diseases - DZNE)
 #   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
 #
-# This file is part of the PyMRI_PSO software.
+# This file is part of the PyMyelinPSO software.
 # See the LICENSE file in the project root for full license information.
 
 """
