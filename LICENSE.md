@@ -44,7 +44,7 @@ See the GNU Affero General Public License for more details.
 ## License Copy
 
 You should have received a copy of the GNU Affero General Public License  
-along with this program — see [LICENSE](LICENSE).  
+along with this program — see [LICENSE/APGL-3.0-or-later.txt](LICENSE/APGL-3.0-or-later.txt).  
 
 If not, it can be found at:  
 https://www.gnu.org/licenses/agpl-3.0.html
