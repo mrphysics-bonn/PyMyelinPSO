@@ -428,9 +428,6 @@ class mwf_analysis():
         self.data.slice_num = slice_num
 
         mwf_mean = nib.load(data_path)
-        # mwf_mean = nib.load('F:/JIMM2/MWF_invivo/Python_V.2.0.0_alpha/local search/sego_local_search/Atlas_Mean.nii')
-        # mwf_mean            = nib.load(os.path.join(
-        #                                os.path.dirname(__file__), 'Atlas_Mean.nii.gz'))
         
         # slicing => x[:,:,slice_num] = x[a,a,s] or x[:,slice_num,:] = x[a,s,a]
         # np.squeeze helps to reduce unnecessary dimensions
@@ -490,7 +487,6 @@ class mwf_analysis():
             data_complex = np.zeros((n1, n2, len(self.tsig[signal_type])))
         else:
             data = np.zeros((n1, n2, len(self.tsig[signal_type])))
-            # if complex_T2S and signal_type=='T2S':
             data_complex = np.zeros((n1, n2, len(self.tsig[signal_type])))    
             progress = np.zeros((1,))
 
@@ -505,8 +501,6 @@ class mwf_analysis():
                     A = self.sm[signal_type]
                     
                     if complex_T2S and signal_type=='T2S':
-                        
-                        # np.random.seed(0)
                         
                         fast_decay = self.integrate_distribution(
                             A[:, :, 0], fast_component, 'T2S')
@@ -542,7 +536,6 @@ class mwf_analysis():
                         signal = np.dot(A[:, :, 0], d)
                         
                         if SNR[0] != 0:
-                            # np.random.seed(0)
                             signal += np.random.normal(loc=0, scale=np.abs(
                                 signal[0]) / SNR[0], size=np.shape(signal))
                             
