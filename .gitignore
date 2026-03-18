@@ -24,12 +24,7 @@ dist/
 .ipynb_checkpoints/
 
 # Directories
-segmentation/
-local\ search/
 PyMyelinPSO/visualization/
-magma_paper/
 
 # Scripts & Files
 PyMyelinPSO/development*.ipynb
-PyMyelinPSO/paper_examples.ipynb
-PyMyelinPSO/pso_examples_archiv.ipynb
