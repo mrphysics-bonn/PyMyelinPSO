@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:
@@ -116,13 +116,12 @@ class Parameters():
                 # self.int2    = (0.1, 10)   # area under the 2nd Gaussian (integral) 
                 # self.MWF     = (0,   0.85) # myelin water fraction (integral)
             
-            # # for atlas
             def __init__(self):
                 self.m1      = (10,  25)   # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.5, 1)    # std (σ)  / 1st Gaussian width
+                self.m1_sig  = (0.8, 0.8)  # std (σ)  / 1st Gaussian width
                 self.m2      = (60,  100)  # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.5, 1)    # std (σ)  / 2nd Gaussian width
-                self.int2    = (0.1, 10)   # area under the 2nd Gaussian (integral) 
+                self.m2_sig  = (0.8, 0.8)    # std (σ)  / 2nd Gaussian width
+                self.int2    = (0.1, 5)    # area under the 2nd Gaussian (integral) 
                 self.MWF     = (0,   0.85) # myelin water fraction (integral)
         
         class ThreeComponentParams():
@@ -148,16 +147,15 @@ class Parameters():
             
             def __init__(self):  
                 self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
-                self.m1_sig  = (0.5, 1)     # std (σ)  / 1st Gaussian width
+                self.m1_sig  = (0.8, 0.8)   # std (σ)  / 1st Gaussian width
                 self.m2      = (45,  100)   # mean (μ) / 2nd Gaussian center
-                self.m2_sig  = (0.5, 1)     # std (σ)  / 2nd Gaussian width
-                self.int2    = (0.1, 10)    # area under the 2nd Gaussian (integral) 
-                self.MWF     = (0,   0.85)  # myelin water fraction (integral)
+                self.m2_sig  = (0.8, 0.8)   # std (σ)  / 2nd Gaussian width
+                self.int2    = (0.1, 5)     # area under the 2nd Gaussian (integral) 
+                self.MWF     = (0, 0.85)    # myelin water fraction (integral)
                 self.MW_f    = (-75, 75)    # frequency shift MW component (Hz)
                 self.FW_f    = (-75, 75)    # frequency shift FW component (Hz)
                 self.phi     = (0, 2*np.pi) # global phase shift (rad)
                 
-                # # for atlas
                 # self.m1      = (5,   25)    # mean (μ) / 1st Gaussian center
                 # self.m1_sig  = (0.1, 0.1)   # std (σ)  / 1st Gaussian width
                 # self.m2      = (45,  65)    # mean (μ) / 2nd Gaussian center (60, 90)

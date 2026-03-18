@@ -27,6 +27,7 @@ dist/
 segmentation/
 local\ search/
 PyMyelinPSO/visualization/
+magma_paper/
 
 # Scripts & Files
 PyMyelinPSO/development*.ipynb

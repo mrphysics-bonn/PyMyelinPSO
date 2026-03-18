@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-FileCopyrightText: 2026 German Center for Neurodegenerative Diseases - DZNE
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
@@ -408,7 +408,7 @@ class mwf_analysis():
             print('min , max FA scaling = (%6.4f, %6.4f)' % (b1_min, b1_max))
 
     def prep_synthetic_data(self, data_path, axis, slice_num, signal_type, mwf_thresh=0.025, 
-                            SNR=500.0, seed=5, nprocs=8, dmean=[], dstdv=[], 
+                            SNR=[500.0, 0], seed=5, nprocs=8, dmean=[], dstdv=[], 
                             x=0, y=0, complex_T2S=False, phases=[0,0,0], verbose=True):
         
         # default values: mean and standard deviation of 2 Gaussian peaks for synthetic signals
@@ -497,7 +497,8 @@ class mwf_analysis():
         def inner_loop(i):
             for j in range(n2):
                 if msk[i, j] > 0:
-                    if seed > 0.0:
+                    if seed > 0.0 and SNR[1] == 0:
+                        print('SNR correlated')
                         np.random.seed(seed)
                         
                     fast_component, slow_component = distribution(mwf[i, j])
@@ -527,11 +528,11 @@ class mwf_analysis():
                         signal_real = np.real(signal)
                         signal_imag = np.imag(signal)
                         
-                        if SNR != 0:
+                        if SNR[0] != 0:
                             signal_real += np.random.normal(loc=0, scale=np.abs(
-                                signal_real[0]) / SNR, size=np.shape(signal_real))
+                                signal_real[0]) / SNR[0], size=np.shape(signal_real))
                             signal_imag += np.random.normal(loc=0, scale=np.abs(
-                                signal_imag[0]) / SNR, size=np.shape(signal_imag))
+                                signal_imag[0]) / SNR[0], size=np.shape(signal_imag))
 
                         signal = signal_real + signal_imag*1j
                         data[i, j, :] = np.abs(signal)
@@ -540,10 +541,10 @@ class mwf_analysis():
                         d = np.add(fast_component, slow_component)
                         signal = np.dot(A[:, :, 0], d)
                         
-                        if SNR != 0:
+                        if SNR[0] != 0:
                             # np.random.seed(0)
                             signal += np.random.normal(loc=0, scale=np.abs(
-                                signal[0]) / SNR, size=np.shape(signal))
+                                signal[0]) / SNR[0], size=np.shape(signal))
                             
                         data[i, j, :] = np.abs(signal)
 

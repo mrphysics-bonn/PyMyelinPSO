@@ -28,7 +28,6 @@ from   pathlib import Path
 
 import help_tools   as     hlp
 from   mwf_modeling import mwf_analysis
-#from   mwf_t1t2t2s  import mwf_analysis
 from   pso_core     import ParticleSwarmOptimizer as PSOclass
 
 
@@ -376,6 +375,7 @@ class PSOpreparation_SI(PSOclass):
             data_path  = os.path.join(self.data_dir, self.config.source.file.ATLAS)
             snr_use    = self.config.source.data.add_noise[0]
             snr        = self.config.source.data.add_noise[1] if snr_use == True else 0
+            snr_type   = self.config.source.data.add_noise[2]
             config     = self.config.source.data.atlas
             axis       = config.axis
             seed       = config.seed
@@ -394,19 +394,19 @@ class PSOpreparation_SI(PSOclass):
                 if self.inv_T1 == True:                
                     self.masks['T1']  = self.root_mwf.prep_synthetic_data(data_path = data_path,
                                              axis = axis, slice_num = i, signal_type = 'T1', mwf_thresh = mwf_thresh,
-                                             SNR  = snr, seed = seed,  dmean = np.array(means[0]), dstdv=np.array(widths[0]),
+                                             SNR  = [snr, snr_type], seed = seed,  dmean = np.array(means[0]), dstdv=np.array(widths[0]),
                                              x    = 120, y = 115, complex_T2S = False, phases=phases, verbose=False)
                 
                 if self.inv_T2 == True:
                     self.masks['T2']  = self.root_mwf.prep_synthetic_data(data_path = data_path,
                                              axis = axis, slice_num = i, signal_type = 'T2', mwf_thresh = mwf_thresh,
-                                             SNR  = snr, seed = seed,  dmean = np.array(means[1]), dstdv=np.array(widths[1]),
+                                             SNR  = [snr, snr_type], seed = seed,  dmean = np.array(means[1]), dstdv=np.array(widths[1]),
                                              x    = 120, y = 115, complex_T2S = False, phases=phases, verbose=False)
     
                 if self.inv_T2S == True:
                     self.masks['T2S'] = self.root_mwf.prep_synthetic_data(data_path = data_path,
                                              axis = axis, slice_num = i, signal_type = 'T2S', mwf_thresh = mwf_thresh,
-                                             SNR  = snr, seed = seed,  dmean = np.array(means[2]), dstdv=np.array(widths[2]), 
+                                             SNR  = [snr, snr_type], seed = seed,  dmean = np.array(means[2]), dstdv=np.array(widths[2]), 
                                              x    = 120, y = 115, complex_T2S = cpx, phases=phases, verbose=False)
                     
                     if cpx == True:                        

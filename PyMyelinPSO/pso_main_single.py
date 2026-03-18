@@ -364,7 +364,7 @@ def run_pso_on_config(config_input: object, config_type: str, save_results=True)
             pso_plotter._iter_test(mwf_data=mwf_data_raw, pso_class=PSO, position=(yy,xx,int(_slice)),n_iter=np.where(mask)[0][-1]+2,
                                    save_path=save_path, save_format='PNG', save_dpi=300, save=True)
             
-            print(f'Pixel [{yy},{xx}]: Number of iterations before threshold is reached: {np.where(mask)[0][-1]+2}\n')
+            print(f'Pixel [{yy},{xx}]: Number of iterations before convergence threshold is reached: {np.where(mask)[0][-1]+2}\n')
             print(f'\nSaved results to \n{os.path.dirname(save_path)}.\n')
 
         return PSO, pre_analysis
@@ -522,7 +522,7 @@ def run_pso_on_config(config_input: object, config_type: str, save_results=True)
 
         # saving takes time - no saving of full cube if atlas is inverted
         if not save_results:
-            print(f'nach der abfrage - save_results: {save_results}')  
+            print(f'save_results: {save_results}')  
             return result_map_sl[_sig_calc], pre_analysis #, syn_dat_map
         
         # write full data cubes for each model vector parameter and time log
