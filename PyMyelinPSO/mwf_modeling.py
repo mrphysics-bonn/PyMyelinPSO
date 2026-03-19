@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
-#   Tony Stoecker (German Centre for Neurodegenerative Diseases - DZNE)
+#   Tony Stöcker (German Centre for Neurodegenerative Diseases - DZNE)
 #   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
 #
 # This file is part of the PyMyelinPSO software.
