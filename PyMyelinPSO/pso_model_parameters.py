@@ -7,8 +7,6 @@
 # This file is part of PyMyelinPSO.
 # See the LICENSE file in the project root for license information.
 
-# -*- coding: utf-8 -*-
-
 """
 Parameter definitions for particle swarm optimization (PSO) applied to in vivo MRI data.
     
