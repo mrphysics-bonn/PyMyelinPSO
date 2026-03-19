@@ -1,16 +1,18 @@
 cff-version: 1.2.0
-title: PyJIMM-PSO
+title: PyMyelinPSO
 message: "Please cite this software using these metadata."
 type: software
 version: 1.0
-doi: ''
-date-released: ""
-license: "GPL-3.0"
-repository-code: "github helmholtz domain ??"
+doi: 'https://doi.org/10.5281/zenodo.18709789'
+date-released: "19.03.2026"
+license: "AGPL-3.0"
+repository-code: "https://github.com/mrphysics-bonn/PyMyelinPSO.git"
 keywords:
-  - Particle Swarm Optimization (PSO)
-  - atlas and invivo T1, T2, T2* data analysis
-  - Myelin Water Fraction (MWF) single & joint inversion
+  - Particle Swarm Optimization 
+  - Myelin Water Imaging 
+  - Quantitative Diagnostics 
+  - Uncertainty Quantification 
+  - Myelin 
 authors:
   - given-names: Martin
     family-names: Kobe
