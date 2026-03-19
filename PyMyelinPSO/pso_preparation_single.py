@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
-# Authors:
+# Author:
 #   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
 #
 # This file is part of PyMyelinPSO.

@@ -6,7 +6,7 @@
 #   Tony Stöcker (German Centre for Neurodegenerative Diseases - DZNE)
 #   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
 #
-# This file is part of the PyMyelinPSO software.
+# This file is part of PyMyelinPSO.
 # See the LICENSE file in the project root for full license information.
 
 """
