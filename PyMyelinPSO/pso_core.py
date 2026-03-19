@@ -3,7 +3,7 @@
 #
 # Authors:
 #   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
-#   Segolene Dega (Helmholtz Centre for Environmental Research - UFZ)
+#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
 #   Hendrik Paasche (Helmholtz Centre for Environmental Research - UFZ)
 #
 # This file is part of PyMyelinPSO.
