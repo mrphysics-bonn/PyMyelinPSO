@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: 2026 German Center for Neurodegenerative Diseases - DZNE
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
 #   Tony Stoecker (German Centre for Neurodegenerative Diseases - DZNE)
-#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
+#   SÃ©golÃ¨ne Dega (Helmholtz Centre for Environmental Research - UFZ)
 #
 # This file is part of the PyMyelinPSO software.
 # See the LICENSE file in the project root for full license information.
@@ -382,7 +382,7 @@ class mwf_analysis():
         b1_max = np.nanmax(b1_msk)
 
         # Calculate b1_grid only for T2 to avoid changes from T2S values in JI applications
-        # → prevents unintended modifications of the T2 matrix through inheritance        
+        # â†’ prevents unintended modifications of the T2 matrix through inheritance        
         if signal_type == 'T2':
             self.b1_grid = np.linspace(b1_min, b1_max, N_b1_grid)        
 

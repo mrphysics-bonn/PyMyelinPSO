@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:
@@ -24,7 +24,7 @@ import os
 # Environment configuration (set before importing NumPy / SciPy)
 # --------------------------------------------------------------
 # Restricts internal thread usage of math libraries (e.g. MKL, OpenBLAS)
-# to prevent thread oversubscription — especially important on Linux systems.
+# to prevent thread oversubscription â€” especially important on Linux systems.
 ###############################################################################
 os.environ.setdefault("OMP_NUM_THREADS","1")
 os.environ.setdefault("MKL_NUM_THREADS","1")
@@ -98,7 +98,7 @@ def _open_memmap_ro(path: str, shape, dtype_str, order="C"):
 def _switch_slice(memdesc: dict, b1_index_map, sig_list, config_static, constants):
 
     '''
-    Loads memmaps and config into worker’s global memory.
+    Loads memmaps and config into workerâ€™s global memory.
     '''
     sig1, sig2       = sig_list[0], sig_list[1]
     
@@ -584,7 +584,7 @@ def run_pso_on_config(config_input: str, config_type: str, save_results=True):
                 rand_seeds     = np.random.randint(0, 100001, size=_PSO_iter)
                 _, b1_idx_map  = _set_pix_param(_sig_list[:2], 0, slice_param, pre_analysis.data_type)
                 
-                # Memmaps für diesen Slice erstellen (in Slice-spez. Ordner)
+                # Memmaps fÃ¼r diesen Slice erstellen (in Slice-spez. Ordner)
                 tmpdir = Path(os.path.join(save_path, "_mm")).resolve()
                 tmpdir.mkdir(parents=True, exist_ok=True)
 

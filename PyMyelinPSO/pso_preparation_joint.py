@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f√ºr Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:

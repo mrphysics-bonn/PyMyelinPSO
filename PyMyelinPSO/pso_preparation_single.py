@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
@@ -140,7 +140,7 @@ class PSOpreparation_SI(PSOclass):
         """
         
         if self.data_type == 'atlas':
-            # No preprocessing applied — ignores B1 field inhomogenity
+            # No preprocessing applied â€” ignores B1 field inhomogenity
             pass
         
         elif self.data_type == 'invivo':

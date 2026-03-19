@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Authors:
@@ -756,7 +756,7 @@ class ParticleSwarmOptimizer(PM):
 
     def fitness(self):
         
-        """Computes particle fitness values based on model–observation misfit."""
+        """Computes particle fitness values based on modelâ€“observation misfit."""
         
         # NOTE for CT2S signal: phase and magnitude could also be weighted differently 
         #
@@ -858,7 +858,7 @@ class ParticleSwarmOptimizer(PM):
 
         """
         Updates the global best position among all particles.
-        --> drives convergence toward the swarm’s optimal solution
+        --> drives convergence toward the swarmâ€™s optimal solution
         """
 
         if self.inv_SI == True:
@@ -1041,7 +1041,7 @@ class ParticleSwarmOptimizer(PM):
         # Generate synthetic data based on the current particle model parameters
         self.compute_synthetic_decay()
         
-        # Compute particle fitness values based on model–observation misfit
+        # Compute particle fitness values based on modelâ€“observation misfit
         self.fitness()
 
         # Update particle-wise personal best solutions (local bests)
@@ -1084,7 +1084,7 @@ class ParticleSwarmOptimizer(PM):
             # Update synthetic data based on the current particle model parameters
             self.compute_synthetic_decay()
                         
-            # Compute particle fitness values based on model–observation misfit
+            # Compute particle fitness values based on modelâ€“observation misfit
             self.fitness()
             
             # Update particle-wise personal best solutions (local bests)

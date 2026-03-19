@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum f�r Umweltforschung GmbH - UFZ
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # Author:
@@ -269,7 +269,7 @@ class PSOPlotter():
         image     = inv_data[:, :, ind_mwf, -1]
         image_rot = np.rot90(image)
         
-        # after rotation: (x, y) → (new_x, new_y) = (y, width - 1 - x)
+        # after rotation: (x, y) â†’ (new_x, new_y) = (y, width - 1 - x)
         height, width = image_rot.shape
     
         # plot
@@ -278,9 +278,9 @@ class PSOPlotter():
         im = ax.imshow(image_rot, cmap=cmap, vmin=vmin, vmax=vmax)
         
         # scatter plot option
-        # scatter location before rotation: arr[y,x] → scatter(x,y) #PLOT
+        # scatter location before rotation: arr[y,x] â†’ scatter(x,y) #PLOT
         # scatter location after rotation:  scatter(new_x, new_y) = (y, width-1-x) #PLOT
-        # array location before rotation: arr[y,x) → row, column
+        # array location before rotation: arr[y,x) â†’ row, column
         # array location after rotation: arr[new_y, new_x] = (height-1-x,y) #VALUES
         # NOTE: MWF could be slightly different to the pareto plos due to a different PSO cycle number
         #       --> for the very same values use a collector like best_MWF list
