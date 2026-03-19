@@ -1,9 +1,12 @@
-# SPDX-FileCopyrightText: 2025 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
-# SPDX-License-Identifier: GPL-3.0-or-later
-
+# SPDX-FileCopyrightText: 2026 Helmholtz-Zentrum für Umweltforschung GmbH - UFZ
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Author:
+#   Martin Kobe (Helmholtz Centre for Environmental Research - UFZ)
+#
 # This configuration file controls the Particle Swarm Optimization (PSO) of 
 # synthetic or in vivo MRI data using the module:
-# PyMRI_PSO - https://github.com/
+# PyMyelinPSO - https://github.com/mrphysics-bonn/PyMyelinPSO.git
 #
 # ---------------------
 # 
@@ -39,7 +42,8 @@ source:
     JI:        false           # joint multi-parameter inversion
   data:
     type:       ''             # ['invivo', 'atlas'] - data source for inversion
-    add_noise:  [true,150]     # MWF atlas experiments: add noise on a specific SNR level
+    add_noise:  [true,150,0]   # [True/False, SNR, 0/1] - MWF atlas experiments:
+                               # add noise on a specific SNR level, 0: correlated, 1: uncorrelated
     norm_max:   true           # normalize input data to maximum signal amplitude (recommended)
     shape:      [110,110,24]   # [x,y,z] - nifti data array shape; atlas shape: [182, 218, 182]
     atlas:
