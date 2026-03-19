@@ -9,7 +9,7 @@
 
 """
 Side script for preparing particle swarm optimization (PSO) on MRI invivo data.
-Inversion type: single inversion.
+Inversion type: joint inversion.
 
 Purpose:
     a) Generates and/or fills arrays with observed MRI data both from MRI invivo

@@ -4,7 +4,7 @@
 #
 # Authors:
 #   Tony Stoecker (German Centre for Neurodegenerative Diseases - DZNE)
-#   SÃ©golÃ¨ne Dega (Helmholtz Centre for Environmental Research - UFZ)
+#   Ségolène Dega (Helmholtz Centre for Environmental Research - UFZ)
 #
 # This file is part of the PyMyelinPSO software.
 # See the LICENSE file in the project root for full license information.
